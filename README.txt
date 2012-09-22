@@ -1,1 +1,0 @@
-This is a ruby practice based on <<Pragmatic.Bookshelf.Everyday.Scripting.with.Ruby.Jan.2007>>
