@@ -5,24 +5,24 @@
 
 function networkListener (event)
 
-	 if (event.isError) then
+	if (event.isError) then
 
-	     print("Network error - download failed" .. event.response)
+	   print("Network error - download failed" .. event.response)
 
-         return
-     else
+       return
+	else
 
 	 --download
 
      --Check whether the file exists, if yes, remove it
-	 local path = system.pathForFile(  "pos.txt", system.DocumentsDirectory )
+     local path = system.pathForFile(  "pos.txt", system.DocumentsDirectory )
      local fhd = io.open( path )
 
 	 if fhd then
 
-      print( "File exists" )
+         print( "File exists" )
 
-	  fhd.close()
+	     fhd.close()
 
 	  local results, reason = os.remove( path )
 
@@ -37,8 +37,10 @@ function networkListener (event)
 	  local      MaxLatitude = 0
 
 	  local path = system.pathForFile("pos.txt", system.DocumentsDirectory)
-      --local filename = "d:/Dropbox/workspace/mobileApp/locService/pos.txt"
+      --local filename = "d:/Dropbox/workspace/mobileApp/locService/pos1.txt"
 
+	   -- i is used to remember the user id
+	   local i = 0
 	 for  line in io.lines(filename)  do
 
         -- print("line:" ..line)
@@ -47,7 +49,7 @@ function networkListener (event)
 
 		 --local id,name,longitude,latitude = 1,"s0123456789",13, 0.598
 
-         print("id:" .. id .. ",name:" .. name .. ",longitude:" .. longitude .. ",latitude:" .. latitude)
+         --print("id:" .. id .. ",name:" .. name .. ",longitude:" .. longitude .. ",latitude:" .. latitude)
 
          ----if the furthest user can be shown, all users can be shown
          ----get Maximum x, y coordinates and Minimum x, y coordinates
@@ -69,12 +71,14 @@ function networkListener (event)
          --print("RelativeLongitude:" .. RelativeLongitude .. ",RelativeLatitude:" .. RelativeLatitude)
 
 		----construct the data
-		info[#info + 1 ] = { id, name, RelativeLongitude, RelativeLatitude, longitude, latitude}
+		info[i + 1 ] = { id, name, RelativeLongitude, RelativeLatitude, longitude, latitude}
+         i = i + 1
 
+		 print("getid:" .. id .. ",RelativeLongitude:" .. RelativeLongitude .. ",RelativeLatitude:" .. RelativeLatitude)
 	end
 
+ -- end
 end
-
 
 function tapListener1(event)
          print("display the circles")
@@ -94,6 +98,7 @@ function tapListener2(event)
           object:removeSelf()
          end
 
+		 --The text will be displayed for 5 seconds, and removed
 		 timer:performWithDelay( 5000, tapListener2 )
 
 
@@ -114,57 +119,49 @@ function addListener2()
 		 return true
 end
 
+
 -- construct the bounding box
 function displayResult()
 
+	--define the 1st as the user, who should be in the ceneter and be in red color
+	-- which means that index of info is 1,so
+	local id = tonumber(info[1][1])
+	print(" 1st user's id:" ..id)
 
-	local index, v, key, value
-	for index,v in ipairs(info) do
+	local userxpos = display.contentWidth / 2
+	local userypos = display.contentHeight / 2
 
-         local id = info[index][1]
-		 print("getid:" ..id)
+	---- create a new circle
+	circle = display.newCircle(userxpos,userypos,15)
+	circle:setFillColor(255,0,0,255)
+	local name=info[1][2]
+
+	circle.name = display.newText(name,userxpos,userypos,native.systemFont,16)
+	--circle.name.isVisible = false
+
+	for index,value in ipairs(info) do
+
+		if index ~= 1 then
+
+			print("The other id:" .. id)
+
+			local xpos = info[index][3]
+			local ypos = info[index][4]
+			local name = info[index][2]
 
 
-        -- define the 1st as the user, who should be in the ceneter and be in red color
-		if id == 1 then
-		     --print("index:" .. index)
-            local userxpos = display.contentWidth / 2
-            local userypos = display.contentHeight / 2
+			--print("xpos:" .. xpos .. ",ypos:" .. ypos .. ",name:" .. name)
+			circle = display.newCircle (xpos,ypos,15)
 
-			---- create a new circle
-			circle = display.newCircle(userxpos,userypos,15)
-			circle:setFillColor(255,0,0,255)
-			local name=info[index][2]
-			circle.name = display.newText(name,userxpos,userypos,native.systemFont,16)
+			circle:setFillColor(0,0,255,255)
+			circle.name = display.newText(name,xpos,ypos,native.systemFont,16)
 			--circle.name.isVisible = false
-
-			--
-            -- display the result on screen and
-			addListener1()
-
-		else
-
-			for key,value in ipairs(info[index]) do
-               -- print("index1:" .. key)
-
-				local xpos = info[index][3]
-				local ypos = info[index][4]
-				local name = info[index][2]
-
-
-                 print("xpos:" .. xpos .. ",ypos:" .. ypos .. ",name:" .. name)
-				circle = display.newCircle (xpos,ypos,15)
-
-				circle:setFillColor(0,0,255,255)
-				circle.name = display.newText(name,xpos,ypos,native.systemFont,16)
-				--circle.name.isVisible = false
-
-
-				addListener1()
 			end
-
 		end
-	end
+
+
+     --if being tapped, the user name will be displayed
+	 addListener1()
 
 	-- display the text
 	myText=display.newText("Successfully get data",25,25,native.systemFont,16)
@@ -173,16 +170,16 @@ function displayResult()
 	myText:setTextColor(255,255,255)
 end
 
------- main ------
 
+------ main ------
+--
 -- table info is used to store the user's information
 info = {}
 
---
---local circle,myText
-
 --get data every 10 seconds and construct the related user data
 timer.performWithDelay(10000,networkListener,0)
+--networkListener()
+---info[1] = { 1, "s11222", 10, 10}
 
 -- display the result on screen and interact with the user
 displayResult()
