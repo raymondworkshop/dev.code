@@ -1,4 +1,4 @@
-#!/c:/lua5.1/lua.exe
+--#!/c:/lua5.1/lua.exe
 ---
 ---This is a homework in Mobile Application course in CUHK, written by zhaowenlong----
 ---The function is to display all users's location based on user's location on screen ----
