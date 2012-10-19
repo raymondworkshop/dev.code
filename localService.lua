@@ -1,83 +1,102 @@
---#!/c:/lua5.1/lua.exe
+#!/c:/lua5.1/lua.exe
 ---
 ---This is a homework in Mobile Application course in CUHK, written by zhaowenlong----
----
+---The function is to display all users's location based on user's location on screen ----
+---It is built on Corona middle layer
 
-function networkListener (event)
+function networkListener ()
 
 	if (event.isError) then
 
-	   print("Network error - download failed" .. event.response)
+	    print("Network error - download failed" .. event.response)
 
-       return
+      return
 	else
 
-	 --download
+	     --download
 
-     --Check whether the file exists, if yes, remove it
-     local path = system.pathForFile(  "pos.txt", system.DocumentsDirectory )
-     local fhd = io.open( path )
+        --Check whether the file exists, if yes, remove it
+        local path = system.pathForFile(  "pos.txt", system.DocumentsDirectory )
+        local fhd = io.open( path )
 
-	 if fhd then
+	    if fhd then
 
-         print( "File exists" )
+             print( "File exists" )
 
-	     fhd.close()
+	         fhd.close()
 
-	  local results, reason = os.remove( path )
+	         local results, reason = os.remove( path )
 
-     end
+         end
 
-	 network.download("http://www.cse.cuhk.edu.hk/~tklam/pos.txt","GET",networkListener,"pos.txt",system.DocumentsDirectory)
+		network.download("http://www.cse.cuhk.edu.hk/~tklam/pos.txt","GET",networkListener,"pos.txt",system.DocumentsDirectory)
 
 
-	  -- read the data file downloaded and parse it
+	         -- read the data file downloaded and parse it
 
-	  local    MaxLongitude = 0
-	  local      MaxLatitude = 0
+		local  MaxLongitude,MaxLatitude = 0,0
+		local userLongitude,userlatitude,relativeLongitude,relativeLatitude = 0, 0, 0, 0
 
-	  local path = system.pathForFile("pos.txt", system.DocumentsDirectory)
-      --local filename = "d:/Dropbox/workspace/mobileApp/locService/pos1.txt"
+		local path = system.pathForFile("pos.txt", system.DocumentsDirectory)
+          --  local filename = "d:/Dropbox/workspace/mobileApp/locService/pos.txt"
 
-	   -- i is used to remember the user id
-	   local i = 0
-	 for  line in io.lines(filename)  do
+		-- i is used to remember the user id
+		local i = 0
 
-        -- print("line:" ..line)
+		for  line in io.lines(filename)  do
 
-		local id,id1,name,name1,longitude,longitude1,latitude,latitude1= string.find(line, "([^%s]+)([^%s]+)([^%s]+)([^%s]+)([^%s]+)")
+			i = i + 1
+			--print("line:" ..line)
+		    local _,_,id,name,longitude,latitude,altitude= string.find(line, '(%d+)%s+(%w+)%s+([-+]*[0-9]\.?[0-9]*)%s+([-+]*[0-9]\.?[0-9]*)%s+([^%s]+)')
+			 --local id,name,longitude,latitude = 1,"s0123456789",13, 0.598
 
-		 --local id,name,longitude,latitude = 1,"s0123456789",13, 0.598
+             --print("id:" .. id .. ",name:" .. name .. ",longitude:" .. longitude .. ",latitude:" .. latitude)
 
-         --print("id:" .. id .. ",name:" .. name .. ",longitude:" .. longitude .. ",latitude:" .. latitude)
+             --construct the Bounding box based on maximum and Minimum
+             ----which means that if the furthest user can be shown, all users can be shown
+             ----get Maximum x, y coordinates and Minimum x, y coordinates
+            longitude =tonumber(longitude)
+		    if math.abs(longitude) >= MaxLongitude then
+			     MaxLongitude = math.abs(longitude)
+		    end
 
-         ----if the furthest user can be shown, all users can be shown
-         ----get Maximum x, y coordinates and Minimum x, y coordinates
-         longitude =tonumber(longitude)
-		if math.abs(longitude) >= MaxLongitude then
-			MaxLongitude = longitude
-		end
+		     --print("longitude:" .. longitude .. ",MaxLongitude:" ..MaxLongitude)
 
-         ----find the relative location
-		local  RelativeLongitude = math.abs(MaxLongitude - longitude)
-		--print("longitude:" .. longitude .. ",RelativeLongitude:" ..RelativeLongitude)
+		    latitude =tonumber(latitude)
+		    if math.abs(latitude) >= MaxLatitude then
+		         MaxLatitude = math.abs(latitude)
+		    end
+             --print("latitude:" .. latitude .. ",MaxLatitude:" ..MaxLatitude)
 
-		latitude =tonumber(latitude)
-		if math.abs(latitude) >= MaxLatitude then
-			MaxLatitude = latitude
-		end
 
-		local RelativeLatitude = math.abs(MaxLatitude - latitude)
-         --print("RelativeLongitude:" .. RelativeLongitude .. ",RelativeLatitude:" .. RelativeLatitude)
+			 ----find the relative location
 
-		----construct the data
-		info[i + 1 ] = { id, name, RelativeLongitude, RelativeLatitude, longitude, latitude}
-         i = i + 1
+			 if i == 1 then
+                 userLongitude = longitude
+                 userlatitude = latitude
 
-		 print("getid:" .. id .. ",RelativeLongitude:" .. RelativeLongitude .. ",RelativeLatitude:" .. RelativeLatitude)
-	end
+				 relativeLongitude = longitude
+				 relativeLatitude = latitude
+			 else
+			     relativeLongitude = longitude - userLongitude
+				 relativeLatitude = latitude - userlatitude
+             end
 
- -- end
+		     ----construct the data
+			 id=tonumber(id)
+		    userinfo[i] = { id, name,latitude, longitude,relativeLatitude,relativeLongitude}
+
+		    print("getid:" .. id .. ",name:" .. name .. ",longitude:" .. longitude .. ",latitude:" .. latitude)
+            --print("relativeLatitude:" .. relativeLatitude .. ",relativeLongitude:" .. relativeLongitude)
+		 end
+
+	 --print("MaxLongitude:" .. MaxLongitude .. ",MaxLatitude:" .. MaxLatitude)
+
+		 -- store the max info in table configinfo
+	 configinfo ={MaxLatitude,MaxLongitude}
+
+    --end
+
 end
 
 function tapListener1(event)
@@ -90,12 +109,11 @@ function tapListener1(event)
 end
 
 
-
 function tapListener2(event)
          print("remove the text on screen")
 
-		if myText ~= nil then
-          object:removeSelf()
+		if circle.name ~= nil then
+          circle.name.isVisible = false
          end
 
 		 --The text will be displayed for 5 seconds, and removed
@@ -124,47 +142,78 @@ end
 function displayResult()
 
 	--define the 1st as the user, who should be in the ceneter and be in red color
-	-- which means that index of info is 1,so
-	local id = tonumber(info[1][1])
-	print(" 1st user's id:" ..id)
+	-- which means that index of userinfo is 1,so
+	local id = userinfo[1][1]
+	--print(" 1st user's id:" ..id)
 
-	local userxpos = display.contentWidth / 2
-	local userypos = display.contentHeight / 2
+	local defaultxpos = display.contentWidth / 2
+	local defaultypos = display.contentHeight / 2
+     --local defaultxpos = 20
+	 --local defaultypos = 20
 
-	---- create a new circle
-	circle = display.newCircle(userxpos,userypos,15)
-	circle:setFillColor(255,0,0,255)
-	local name=info[1][2]
+	 -- get the max display value on screen
+	local displayLatitude = configinfo[1] * 2
+	local displayLongitude= configinfo[2] * 2
 
-	circle.name = display.newText(name,userxpos,userypos,native.systemFont,16)
-	--circle.name.isVisible = false
-
-	for index,value in ipairs(info) do
-
-		if index ~= 1 then
-
-			print("The other id:" .. id)
-
-			local xpos = info[index][3]
-			local ypos = info[index][4]
-			local name = info[index][2]
+	 -- user relative physical coordinates on screen
+	local userxpos, userypos
 
 
-			--print("xpos:" .. xpos .. ",ypos:" .. ypos .. ",name:" .. name)
-			circle = display.newCircle (xpos,ypos,15)
+	for index,value in ipairs(userinfo) do
+        --print("index:" .. index)
+
+		local id,name,latitude,longitude = userinfo[index][1],userinfo[index][2],userinfo[index][3],userinfo[index][4]
+        local relativeLatitude,relativeLongitude = userinfo[index][5],userinfo[index][6]
+
+		--calculate the relative physical coordinates and map the physical coordinates to display coordinates (320 x 480)
+
+		print("relativeLatitude:" ..relativeLatitude .. ",relativeLongitude:" ..relativeLongitude)
+		if relativeLatitude>=0 then
+
+			 userxpos = defaultxpos + (latitude * screenWidth) / displayLatitude
+
+		else
+			 userxpos = defaultxpos - (math.abs(latitude) * screenWidth) / displayLatitude
+
+		end
+
+
+         if relativeLongitude>=0 then
+			userypos =  defaultypos + (longitude * screenHeight) / displayLongitude
+		 else
+
+			userypos =  defaultypos - (math.abs(longitude) * screenHeight) / displayLongitude
+         end
+
+		 print("id:" .. id .. ",userxpos:" .. userxpos .. ",userypos:" .. userypos)
+
+		 ---- create a new circle
+		 circle = display.newCircle(userxpos,userypos,15)
+
+		if index == 1 then
+             print("The user's id:" .. id)
+
+	         circle:setFillColor(255,0,0,255)
+
+		else
+
+			print("The other users' id:" .. id)
 
 			circle:setFillColor(0,0,255,255)
-			circle.name = display.newText(name,xpos,ypos,native.systemFont,16)
-			--circle.name.isVisible = false
-			end
+
 		end
+
+		circle.name = display.newText(name,userxpos,userypos,native.systemFont,16)
+		--circle.name.isVisible = false
+
+	end
 
 
      --if being tapped, the user name will be displayed
 	 addListener1()
 
 	-- display the text
-	myText=display.newText("Successfully get data",25,25,native.systemFont,16)
+	myText=display.newText("Successfully get data",defaultxpos,defaultypos - 60,native.systemFont,16)
 	myText.x = display.contentWidth / 2
 	myText.y = display.contentHeight / 16
 	myText:setTextColor(255,255,255)
@@ -172,14 +221,23 @@ end
 
 
 ------ main ------
---
--- table info is used to store the user's information
-info = {}
+
+-- variable
+---- table userinfo is used to store the user's information like id, name,RelativeLongitude, RelativeLatitude,longitude,latitude
+userinfo = {}
+
+---- table configinfo is used to store the current display information like screen resolution, Max Latitude , Max Longitude
+configinfo = {}
+
+---- the screen resolution
+---- It is better to define a configuration file
+screenWidth,screenHeight =320,480
+
 
 --get data every 10 seconds and construct the related user data
 timer.performWithDelay(10000,networkListener,0)
 --networkListener()
----info[1] = { 1, "s11222", 10, 10}
+--userinfo[1] = { 1, "s11222", 10, 10}
 
 -- display the result on screen and interact with the user
 displayResult()
