@@ -191,13 +191,13 @@ function displayResult()
 		 circle = display.newCircle(userxpos,userypos,15)
 
 		if index == 1 then
-             print("The user's id:" .. id)
+            -- print("The user's id:" .. id)
 
 	         circle:setFillColor(255,0,0,255)
 
 		else
 
-			print("The other users' id:" .. id)
+			--print("The other users' id:" .. id)
 
 			circle:setFillColor(0,0,255,255)
 
