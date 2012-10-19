@@ -167,7 +167,7 @@ function displayResult()
 
 		--calculate the relative physical coordinates and map the physical coordinates to display coordinates (320 x 480)
 
-		print("relativeLatitude:" ..relativeLatitude .. ",relativeLongitude:" ..relativeLongitude)
+		--print("relativeLatitude:" ..relativeLatitude .. ",relativeLongitude:" ..relativeLongitude)
 		if relativeLatitude>=0 then
 
 			 userxpos = defaultxpos + (latitude * screenWidth) / displayLatitude
