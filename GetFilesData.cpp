@@ -26,6 +26,9 @@ void GetFilesData(Data db, string s)
    // include s ?
    // if(db.count(s)>0)
     //{
+    //It's better update the match function in map
+    // for no-full-compatible function
+    // KMP algorithm
          // get the range for key s
         Range range = db.equal_range(s);
         
