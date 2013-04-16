@@ -24,8 +24,8 @@ int GetFilesNumber(Data db,string s)
 void GetFilesData(Data db, string s)
 {
    // include s ?
-    if(db.count(s)>0)
-     {
+   // if(db.count(s)>0)
+    //{
          // get the range for key s
         Range range = db.equal_range(s);
         
@@ -38,7 +38,7 @@ void GetFilesData(Data db, string s)
         // need to talk, continue to do sth
         }
 
-    }
+   //}
         
 }
 
