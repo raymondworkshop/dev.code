@@ -39,7 +39,7 @@ int main()
     //1) This definition (like unsigned, twice than int)  can guarantee the enough space to store the string
     //2) independent of the machine
 
-    for(string::size_type i = 0; i< st.size(); i++)
+    for(string::size_type i = 0; i != st.size(); i++)
         cout<<st[i] <<endl; // print each char
     
 
@@ -47,7 +47,7 @@ int main()
     string input, output;
     getline(cin,input);
     cout<< input <<endl;
-    for(string::size_type i = 0; i<input.size(); i++)
+    for(string::size_type i = 0; i != input.size(); i++)
         {
             //cout<<input[i]<<endl;
             if (!ispunct(input[i]))
