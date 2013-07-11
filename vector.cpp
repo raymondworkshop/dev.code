@@ -14,18 +14,18 @@ int main()
     // vector<string> svec(10,"hi");
 
     // for efficience, add the element dynamicly
-    /*
+    
     vector<int> ivec(10,1);
 
     for (vector<int>::size_type i =0; i != 10; ++i)
         ivec.push_back(i);
-    */
+    
     /*for(vector<int>::size_type i =0; i != ivec.size(); ++i)
         cout<< ivec[i];
 
     cout<<endl;
     */
-    /*
+    
     int j = 0;
     vector<int>::iterator iter;
     // the below is wrong code
@@ -41,9 +41,7 @@ int main()
         cout<< *iter; // * is dereference operator
 
     cout<<endl;
-    */
-
-    /*
+    
     // read
     vector<int> ivec;
     vector<int>::iterator iter;
@@ -71,7 +69,7 @@ int main()
         cout<<"The center element:"<< *first <<endl;
         
     }
-    */
+    
     
     vector<string> svec;
     vector<string>::iterator iter;
