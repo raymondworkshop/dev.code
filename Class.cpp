@@ -123,6 +123,40 @@ Sales add(const Sales &obj1, const Sales &obj2)
     
 }
 
+class Name
+{
+private:
+    string *pstring;
+    int i;
+public:
+    //constructor
+    Name():pstring(new string), i(0) {};
+    //copy constructor
+    Name(const Name &other);
+    inline void Get(){  *pstring = "123";};
+     
+    void print()
+    {
+        //*pstring = "wenlong";
+        
+        cout<< *pstring <<endl;
+        
+    }
+    //The class Name needs destructor function,
+    //because constructor construts a string object dynamically
+    ~Name() { delete pstring;}
+    
+};
+Name::Name(const Name &other )
+{
+    //pstring = new string;
+    cout<<"wenlongz"<<endl;
+    
+    pstring = other.pstring;
+    i = other.i;
+    
+}
+
 int main()
 {
     //1.
@@ -155,7 +189,36 @@ int main()
     //4. friend
     Sales sale2 =add(sale, sale1);
     sale2.print();
+
+    ///Each type defines what happens when objects of the type are created
+    //Initialization of objects of class type is defined by constructors
+    //What happens when objects of the type are copied --- copy constructor
+    //------------------------------------ are assigned --- asignment operator
+    //------------------------------------ are destroyed --- the destructor
+    //5. copy constructor is the constructor that takes a signle parameter
+    // that is a (usually const) reference to an object of the class type itself
+    // It can be implicitly invoked by the compiler
+    string dots(10,'.'); // direct initialization
+    // to create book, the compiler first creates a temp object by invoking the string constructor,
+    // then compiler uses the string copy constructor to initialize book as a copy of the temporary
+    string book = "9-999-99"; // copy- initialization
+    //Most classes should define copy and default constructors,
+    //or objects of the classes donot allow copies
+    // and only can be a reference
+    Name name;
+    name.Get();
+    name.print(); // 123
+
+    Name *p = new Name;
+    Name name1(*p); //copy constructor copies *p into name1
+    name1.Get();
+    name1.print(); //123
     
+    //delete p; // destructor is run only when a pointer to a dynamically allocated object is deleted
+    //6. destructor
+    // destructor is used to free resources acquired in the constructor or during the lifetime of the object
+    // Rule of Three: If you nee a destructor, you nee all three copy-control members
+        
     return 0;
     
 }
