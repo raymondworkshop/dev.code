@@ -18,12 +18,12 @@ public:
     Base(const string &book ="hello", double p = 1.0):isbn(book),price(p) {}
     Base(const Base &) {}
     
-    string book() const {return isbn;}
+    string book() const {cout<<"Base"<<endl; return isbn;}
     
     //return total sales price for a specified isbn
     // a base class should define as virtual any function that a derived class will need to redefine
     // derived classes will override and apply different discount
-    virtual double NetPrice(int n) const  {  return n * price;}
+    virtual double NetPrice(int n) const  { cout<<"Base NetPrice"<<endl; return n * price;}
 
     //Base should have virtual deconstructor;
     //Whwen we delete Base pointer,
@@ -43,8 +43,10 @@ private:
     int min; // minimum purchase for discount to apply
     double discount;
 public:
-    Derived( double d=0.5, int m = 5): discount(d), min(m){}
+    Derived( double d=0.2, int m = 5): discount(d), min(m){}
     Derived(const string &book, double p, int m=0, double d=0.0): Base(book, p),min(m),discount(d){}
+
+    string book() const {cout<<"Derive"<<endl;}
     
     
     //redefine base version so as to implement bulk purchase discount policy
@@ -54,11 +56,22 @@ public:
     
 };
 
+class pureVirtual: public Base()
+{
+ public:
+    // define a virtual as pure indicates that  the function provides an interface
+    // for subsequent types to overide but the viersion in this class will never be called
+    // means user will not be albe to create objects of type pureVirtual;
+    double NetPrice(int) const = 0; 
+    
+}
+
+
 //each derived object can access the public and protected members (like price) of its base class
 //as if those members were members of the derived class itself
 double Derived::NetPrice(int cnt) const 
 {
-    cout<<"call Derived NetPrice function"<<endl;
+    cout<<"Derived NetPrice"<<endl;
     
     if(cnt >= min)
         return cnt * (1 - discount) * price;
@@ -114,14 +127,25 @@ int main()
     Base *BaseP = &bulk;
     //   the code forces the call to NetPrice to be resolved to the version defined in Base
     //   The call will  be resolved at compile time
+    double d0 = BaseP->NetPrice(23);
+    cout<<d0<<endl; //11.5
+    
     double d = BaseP->Base::NetPrice(42);
     cout<<d<<endl; // 42
-
+    
+    //Derived *p;
+    //BaseP->book(); // ok, this is a Base pointer
+    BaseP->book(); //Base, actually
+    
+    
     //3. public, private, and protected inheritance
     //   1)in protected inheritance, the public and protected members of the base class
     // are protected members in the derived class;
-    // in private, all are private;
-    // The above controls the access that users of the derived class have
+    //    In private, all are private;
+    // The above controls the access that users (object and members) of the derived class have
+    //   Notice i) the difference between object access (public) and members access (public and protected)
+    //          ii) object access only see the status in its class
+    //              (private inheritance, all members in Base become private in Derived)
 
     //   2)Frienship is not inherited
     //   For static member, if the member is accessible(not private), we can access
@@ -134,15 +158,16 @@ int main()
     //   The is actually a reference to bulk object, the object itself is not copied and the conversion
     //   doesn't change the derived-type object in any way. It remains a derived-type object
     Derived bulk4;
-    Print(bulk4, 10);
+    Print(bulk4, 10); // Print(const Base&, int)
+    
     //   2) using a derived object to initialize or assign to a base-type object
     //      In this case, we are actually calling a function: a constructor or an asignmetn operator
     // use constructor Base::Base(const Base&)
-    Base item4(bulk4); // bulk2 is sliced down to its Base portion
+    Base item4(bulk4); // bulk4 is sliced down to its Base portion
     // use assignment operation Base::operator = (const Base&)
     // item4 = bulk4;
     
-    //    3) no automatic conversion from the base class to a derived class
+    //   3) no automatic conversion from the base class to a derived class
 
     //5. derived constructors and copy control
     //   Each derived constructor initializes its base class + its own data members
@@ -154,7 +179,22 @@ int main()
     //   usually can use the synthesized operations;
     //   Classes with pointer members often need to define their own copy control to manage these members
     
+    //7. 
+    Base item7;
+    Derived bulk7;
+    Base *bp1 = &item7;
+    Base *bp2 = &bulk7;
+    //process:  1)the pointers are Base, so compiler look in Base to see if bp1,bp2 are defined
+    //          2)then look for the function (like NetPrice),
+    //          3) if the function is virtual and the call is through a reference or pointer,
+    //             then compiler generates code to determine which version to run
+    //             based on the dynamic type of the object;
+    //             Otherwise, compiler g enerates code to
+     bp1->NetPrice(10); //virtual call Base::NetPrice run time
+    bp2->NetPrice(10); //virtual call Derived::NetPrice run time
     
+    //8) pure virtual functions
+    // we want user couldn't create such objects at all
               
 }
 
