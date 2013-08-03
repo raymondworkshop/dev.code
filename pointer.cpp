@@ -39,7 +39,7 @@ int main()
     int ival = 1023, ival2 = 2048;
     int *pi = &ival, *pi2 = &ival2;
     pi = pi2; // now pi points to ival2
-    cout<< ival<<endl; // 2048
+    cout<< ival<<endl; // 1023
     // while
     int &ri = ival, &ri2 = ival2;
     ri = ri2; // now ival = ival2
