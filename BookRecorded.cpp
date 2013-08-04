@@ -29,7 +29,7 @@ int main()
     srand(time(0)); //init rand
     string answer;
     
-    while(!time_over && !books.empty())
+    /* while(!time_over && !books.empty())
     {
         int i = rand() % books.size();
         string book_name = books[i];
@@ -40,6 +40,7 @@ int main()
         readed_books.insert(book_name);
         //erase the book from vector
         books.erase(books.begin() + 1);
+    */
         //TODO, seems that there is no input for answer
         cout<<"Did you read it? (Yes/No)" <<endl;
         cin>>answer;
@@ -61,7 +62,7 @@ int main()
             
         }
         
-    }
+        //}
     
     if (time_over)
     {
