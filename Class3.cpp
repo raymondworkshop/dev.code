@@ -43,7 +43,7 @@ private:
     int min; // minimum purchase for discount to apply
     double discount;
 public:
-    Derived( double d=0.2, int m = 5): discount(d), min(m){}
+    Derived( double d=0.5, int m = 5): discount(d), min(m){}
     Derived(const string &book, double p, int m=0, double d=0.0): Base(book, p),min(m),discount(d){}
 
     string book() const {cout<<"Derive"<<endl;}
@@ -56,7 +56,7 @@ public:
     
 };
 
-class pureVirtual: public Base()
+class pureVirtual: public Base
 {
  public:
     // define a virtual as pure indicates that  the function provides an interface
@@ -64,8 +64,7 @@ class pureVirtual: public Base()
     // means user will not be albe to create objects of type pureVirtual;
     double NetPrice(int) const = 0; 
     
-}
-
+};
 
 //each derived object can access the public and protected members (like price) of its base class
 //as if those members were members of the derived class itself
@@ -119,7 +118,7 @@ int main()
     Print(item, 10);// call Base::book and Base::NetPrice
 
     Derived bulk;
-    Print(bulk, 10); //call Base::book and Derived::NetPrice
+    Print(bulk, 10); //call Base::book and Derived::NetPrice, this virtual call is made through a reference
     //    iii)overriding the virtual mechanism,
     //        when a derived-class virtual calls the version from the base.
     //        Only code inside member functions should ever need to use the scope operator(like Base)
@@ -127,7 +126,7 @@ int main()
     Base *BaseP = &bulk;
     //   the code forces the call to NetPrice to be resolved to the version defined in Base
     //   The call will  be resolved at compile time
-    double d0 = BaseP->NetPrice(23);
+    double d0 = BaseP->NetPrice(23);  //thic virtual call is made through a pointer
     cout<<d0<<endl; //11.5
     
     double d = BaseP->Base::NetPrice(42);
@@ -136,7 +135,6 @@ int main()
     //Derived *p;
     //BaseP->book(); // ok, this is a Base pointer
     BaseP->book(); //Base, actually
-    
     
     //3. public, private, and protected inheritance
     //   1)in protected inheritance, the public and protected members of the base class
