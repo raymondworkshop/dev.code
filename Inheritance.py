@@ -1,8 +1,8 @@
 #! /usr/bin/ipython
-import os; os.chdir("/home/zhaowenlong/workspace/proj/dev.mycode/")
 #Inheritance.py -- wenlong
 #Function: -- an example to learn the inheritance in python
 #          -- Reference ch15 and ch16 in "How to Think Like a Computer Scientist"
+#TODO: something running wrong
 import sys
 
 class Card:
