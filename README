@@ -40,8 +40,7 @@ C++:
 27) AssociativeContainer.cpp is about associative container review 
 
 Others:
-1) subsCounter.pl compute numbers of subscriber, which was done in Alcatel-Lucent  **
-2) create_patch.tcl, dbmig_gen.pl, gen_patch.pl, gen_patchLoad.pl, gen_patchStr2.pl, patchLoad.sh are the patch tool, which was done in Alcatel-Lucent
-3) localService.lua displays all users's location based on users' location on screen, based on Corona
-4)
+0) subsCounter.pl compute numbers of subscriber, which was done in Alcatel-Lucent  **
+1) create_patch.tcl, dbmig_gen.pl, gen_patch.pl, gen_patchLoad.pl, gen_patchStr2.pl, patchLoad.sh are the patch tool, which was done in Alcatel-Lucent
+2) localService.lua displays all users's location based on users' location on screen, based on Corona
 
