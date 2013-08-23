@@ -3,13 +3,13 @@ some code exercises
 
 FEATURES:
 ---------------------
-Python:
+python:
 1) Class.py is an oop syntax exercise
 2) Class1.py is an oop instance
 3) Inheritance.py is an Inheritance exercise  ***
 4) LinkedList.py is the linked list  ***
 
-C++:
+c++:
 1) vector.cpp is an vector syntax exercise
 2) vector1.cpp is another vector syntax exercise
 3) trString.cpp is about string implements in Class
@@ -39,7 +39,7 @@ C++:
 27) BookRecorded.cpp is vector and string exercise
 28) AssociativeContainer.cpp is about associative container review 
 
-Others:
+scripts:
 1) subsCounter.pl compute numbers of subscriber, which was done in Alcatel-Lucent  **
 2) create_patch.tcl, dbmig_gen.pl, gen_patch.pl, gen_patchLoad.pl, gen_patchStr2.pl, patchLoad.sh are the patch tool, which was done in Alcatel-Lucent
 3) localService.lua displays all users's location based on users' location on screen, based on Corona middle layer
