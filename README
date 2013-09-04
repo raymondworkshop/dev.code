@@ -39,6 +39,13 @@ c++:
 27) BookRecorded.cpp is vector and string exercise
 28) AssociativeContainer.cpp is about associative container review 
 
+java:
+1)budgetrecord/ is a simple diary function, min project in app dev course in cuhk
+2)speech_and_locationFinder/ is a basic Android version of Siri based on google's natural language API, goolge map and Android framework
+
+matlab:
+1)speech recognition project in AI course
+
 scripts:
 1) subsCounter.pl compute numbers of subscriber, which was done in Alcatel-Lucent  **
 2) create_patch.tcl, dbmig_gen.pl, gen_patch.pl, gen_patchLoad.pl, gen_patchStr2.pl, patchLoad.sh are the patch tool, which was done in Alcatel-Lucent
