@@ -1,0 +1,9 @@
+how to compile:
+dir              >cd music
+compile as:      >javac Instrument.java Music.java Note.java Wind.java
+run as:          >java polymorphism.music.Music
+
+compile as:      >javac Instrument.java Music2.java Note.java Wind.java
+run as:          >java polymorphism.music.Music2
+
+
