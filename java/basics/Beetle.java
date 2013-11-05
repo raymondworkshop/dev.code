@@ -3,6 +3,7 @@
 //
 //reference: <<Thinking in java>>
 //----------------------------
+package basics;
 
 class Insect
 {
