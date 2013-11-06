@@ -37,8 +37,7 @@ class Apple
 public class ThisTest
 {
     int i = 0;
-    ThisTest increment()
-    {
+    ThisTest increment() {
         i++;
         //1) this is in the sense of "this object" or "the current object";
         //this return the reference to the current object via this keyword,
@@ -46,8 +45,7 @@ public class ThisTest
         return this;
     }
 
-    void print()
-    {
+    void print() {
         System.out.println("i = " + i);
         
     }
@@ -56,22 +54,19 @@ public class ThisTest
     int petalCount = 0;
     String s = "initial value";
 
-    ThisTest(int petals)
-    {
+    ThisTest(int petals) {
         petalCount  = petals;
         System.out.println("Constructor w/ int arg only, petalCount= " + petalCount);
         
     }
 
-    ThisTest(String ss)
-    {
+    ThisTest(String ss) {
         System.out.println("Constructor w/ String arg only, s= " + ss);
         s =ss;
         
     }
 
-    ThisTest(String s, int petals)
-    {
+    ThisTest(String s, int petals) {
         //3) in the constructor, this makses an explicit call to the constructor that matches that argument list
         // a straightforward way to call other constructors.
         // call to this msut be first statement in constructor, so cann't call two 
@@ -86,21 +81,21 @@ public class ThisTest
                         
     }
     
-    ThisTest()
-    {
+    ThisTest() {
+        //
         this("hi", 47);
         System.out.println("default constructor (no args)");
         
     }
     
-    void printPetalCount()
-    {
+    void printPetalCount() {
+        
         System.out.println("petalCount = " + petalCount + " s = " + s);
         
     }
         
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
+        //
         ThisTest x = new ThisTest();
         //return the reference to the object x
         x.increment().increment().increment().print(); //3
