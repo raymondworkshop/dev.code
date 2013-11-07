@@ -1,0 +1,4 @@
+1. FilterProcessor.java
+              >cd java
+Compiled as   >javac interfaces/FilterProcessor.java interfaces/Apply1.java interfaces/Processor.java
+Run as        >java interfaces.FilterProcessor
