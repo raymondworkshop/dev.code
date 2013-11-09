@@ -2,3 +2,9 @@
               >cd java
 Compiled as   >javac interfaces/FilterProcessor.java interfaces/Apply1.java interfaces/Processor.java
 Run as        >java interfaces.FilterProcessor
+
+2. AdaptedRandomChars16.java (multiple implementations for the same interface)
+              >cd interfaces
+Compiled as   >javac RandomChars.java AdaptedRandomChars16.java
+Run as        >java interfaces.AdaptedRandomChars16
+ 
