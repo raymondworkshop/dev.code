@@ -1,5 +1,10 @@
 //Outer.java
 //inner class
+class  Out {
+    class Inner1 {
+        Inner1(){ System.out.println("Out.Inner()"); }
+    }
+}
 
 public class Outer {
     //a private String field
@@ -25,14 +30,6 @@ public class Outer {
         return new Inner();
     }
 
-    class Inner1 {
-        private int i = 11;
-        public void value(){
-            System.out.println(Integer.toString(i));
-        }
-        
-    }
-    
     Outer(String s){
         System.out.println("Outer() with s");
         this.s = s;
@@ -51,11 +48,10 @@ public class Outer {
         Outer.Inner oti = ot.makeInner();
         oti.outer().f();
 
-        // another way to create an inner class directly using the .new syntax
-        Outer ot1 = new Outer();
-        Outer.Inner1 oti1 = ot1.new Inner1();
-        oti1.value();
-        
+        //make an instance of the inner class in
+        Out o1 = new Out();
+        //then create inner class object
+        Out.Inner1 oi = o1.new Inner1();
     }
         
 }
