@@ -16,12 +16,12 @@ public class Outer {
     //an inner class
     class Inner {
         Inner (){ System.out.println("Inner()"); }
-        //Inner class can access field s
+        //1. Inner class can access field s
         public String toString(){ return s; }
 
         public Outer outer(){
             return Outer.this;
-            //A plain "this" would be Inner's "this"
+            //2. A plain "this" would be Inner's "this"
         }
     }
 
@@ -44,13 +44,13 @@ public class Outer {
         System.out.println(i.toString());
 
         Outer ot = new Outer();
-        //make an object of the inner class
+        //3. make an object of the inner class
         Outer.Inner oti = ot.makeInner();
         oti.outer().f();
 
         //make an instance of the inner class in
         Out o1 = new Out();
-        //then create inner class object
+        //4. then create inner class object
         Out.Inner1 oi = o1.new Inner1();
     }
         
