@@ -5,9 +5,12 @@
 //Compiled as >javac Contents.java Destination.java TestParcel4.java
 //
 class Parcel4 {
-    //non-inner classes cannot be made private or protected.
+    //1) non-inner classes cannot be made private or protected.
+    // the effect of producing an interface reference from an object that implements it
+    // is essentially the same as upcasting to a base class
+    //
     //private - nothing but Parcel4 can access it
-    private class PContents implements Contents {
+    private class PContents implements Contents { // upcaste to Contents
         private int i = 11;
         public void value(){
             System.out.println(Integer.toString(i));
@@ -34,21 +37,19 @@ class Parcel4 {
         return new PContents();
     }
 
-    //1) the private inner class provides a way
+    //2) the private inner class provides a way
     //for the class designer to completely prevent any type-coding dependencies and
     // and to completely hide details about implementation .
-    //2) extension of an interface is useless from the client programmer's perspective
+    //3) extension of an interface is useless from the client programmer's perspective
     // since the client programmer cannot access any additional methods that aren't part of the public interface
 
-    //3) this also provides an opportunity for the java compiler to generate more efficient code
+    //4) this also provides an opportunity for the java compiler to generate more efficient code
     
-    //because of the private and protected,
-    //in client programmer can't access the name;
 }
 
 public class TestParcel4 {
         public static void main(String[] args){
-            //4)the inner class Parcel4 - implementation of the interface - can be unseen and unaviable,
+            //5)the inner class Parcel4 - implementation of the interface - can be unseen and unaviable,
             //This is convenient for hiding the implementation;
             //All the clients get back is a reference to the base class or the interface.
             Parcel4 p = new Parcel4();
@@ -58,6 +59,7 @@ public class TestParcel4 {
             Destination d = p.destination("Tasmania");
             d.readLabel();
 
+            //because of the private and protected,
             //client can't access private class
             /*
             Parcel4.PContents pc = p.new PContents();
