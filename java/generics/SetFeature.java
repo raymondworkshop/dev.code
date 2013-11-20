@@ -14,6 +14,7 @@
 import java.util.Random;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Collections;
 
 public class SetFeature {
     public static void main(String[] args){
@@ -24,10 +25,12 @@ public class SetFeature {
         for(int i = 0; i < 1000; i++)
             //nextInt() returns a pseudorandom, uniformly distributed int value between 0 and 10;
             //All 10 possible int values are produced with approximately equal probability
-            intset.add(rand.nextInt(10));
+            set1.add(rand.nextInt(10));
         System.out.println(set1);
 
-                
+        System.out.println("H: " + set1.contains("H"));
+        System.out.println("3: " + set1.contains(3));
+
     }
 }
 
