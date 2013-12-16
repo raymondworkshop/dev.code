@@ -61,7 +61,7 @@ public class SweetShop {
         //    -- linking: verify the bytecodes, allocates storage for static fields, and resolves all references to other classes made by this class;
         //    -- initialization: initialize the superclass, execute static initializers and static initialization blocks
         //
-        Class cookie = Cookie.class; //using the .class syntax to get a reference tothe class doesn't cause initialization.
+        Class cookie = Cookie.class; //using the .class syntax to get a reference to the class doesn't cause initialization.
         
         //  Initialization is delayed until the first reference to a static method (the constructor is implicitly static) or to a non-constant static field
         //
