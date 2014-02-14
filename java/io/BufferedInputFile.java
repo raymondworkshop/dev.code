@@ -26,7 +26,8 @@ public class BufferedInputFile {
         String s;
         LinkedList<String> list = new LinkedList<String>();
         //StringBuilder is used to accumulate the entire contents of the file
-        StringBuilder sb = new StringBuilder();
+        //java.lang.StringBuilder
+        StringBuilder sb = new StringBuilder(); //
 
         //add each line to LinkedList
         while((s = in.readLine()) != null)
