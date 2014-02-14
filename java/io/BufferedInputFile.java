@@ -1,5 +1,4 @@
 //BufferedInputFile.java
-//force all the lines in the LinkedList to uppercase and send the results in reverse order
 //
 //1).   Java 1.1 added new classes into the InputStream and OutputStream hierarchy;
 //    Reader and Writer hierarchies were added to support Unicode in all I/O operation.
@@ -17,24 +16,18 @@ import java.io.IOException;
 import java.io.BufferedReader;
 //FileReader inherits from the InputStreamReader class. FileReader is used for reading streams of characters.
 import java.io.FileReader;
-import java.util.LinkedList;
 
 public class BufferedInputFile {
     public static String read(String filename) throws IOException {
         //Reading input by lines:
         BufferedReader in = new BufferedReader(new FileReader(filename));
         String s;
-        LinkedList<String> list = new LinkedList<String>();
         //StringBuilder is used to accumulate the entire contents of the file
         //java.lang.StringBuilder
         StringBuilder sb = new StringBuilder(); //
 
-        //add each line to LinkedList
-        while((s = in.readLine()) != null)
-            list.add(s.toUpperCase());//
-        
-        while(list.peekLast() != null) //while there is a last line
-            sb.append(list.pollLast() + "\n"); 
+        while((s = in.readLine()) != null) 
+            sb.append(s + "\n"); 
 
         in.close();
         return sb.toString();
