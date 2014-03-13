@@ -7,10 +7,10 @@
 //    We'll discover the situations when we have to use the byte-oriented libraries because our code won't compile.
 //
 //    ASCII is a TEXT file so we would use Readers for reading. Java also supports reading from a binary file using InputStreams.
-//    
 //
 //2)    For InputStreams and OutputStreams, streams were adapted for particular needs using "decorator" subclasses of FilterInputStream and FilterOutputStream.
 //    The Reader and Writer class hierarchies continue the use of this idea.
+//
 import java.io.IOException;
 //whenever we want to use readLine(), we shouldn't do it with a DataInputStream, but instead use a BufferedReader.
 import java.io.BufferedReader;
@@ -20,6 +20,7 @@ import java.io.FileReader;
 public class BufferedInputFile {
     public static String read(String filename) throws IOException {
         //Reading input by lines:
+        //for speed, we'll want that file to be buffered so we give the resulting reference to the constructor for a BufferedReader
         BufferedReader in = new BufferedReader(new FileReader(filename));
         String s;
         //StringBuilder is used to accumulate the entire contents of the file
@@ -43,4 +44,3 @@ public class BufferedInputFile {
     }
     
 }
-
