@@ -29,12 +29,19 @@ public class BasicFileOutput {
 
         int lineCount = 1;
         String s;
+        
+        long start = System.nanoTime(); //returns the current value of the most precise available system timer, in nanoseconds
+        
         while((s = in.readLine()) != null)
             out.println(lineCount++ + ": " + s);
 
+        long duration = System.nanoTime() - start;
+        
         //if we don't call close() for all our output files, the buffers might not get flushed
         out.close();
         
+        System.out.println("The running seconds:" + duration + " nanoseconds");
+                
         //show the stored file:
         System.out.println(BufferedInputFile.read(file));
     }
