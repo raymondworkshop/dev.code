@@ -78,7 +78,7 @@ if(!mysql_select_db('biomet', $link)){
 //Assume logo.jpg from the camera matches some picture, for example 140696050427-748138217021250-66310_L_5_Eyelid.bmp
 //2) fetch the related information of 140696050427-748138217021250-66310_L_5_Eyelid.bmp from table biometData
 //   -- idbiometData
- $db_image = "140696784573-838138217065558-1611_L_3_Eyelid.bmp"; //this is returned by the watchlist system
+ $db_image = "138216560533-88011_L_2_Eyelid.bmp"; //this is returned by the watchlist system
  //$sql = "select idbiometData from biometData where eyesPath='suspectsUpload/eyes/$db_image';";
 
 // $id_biomet =  mysql_result(mysql_query($sql, $link), 0) 
@@ -95,6 +95,32 @@ if(!mysql_select_db('biomet', $link)){
    $insert_match_id = $max_match_id + 1;
    echo "[DEBUG]insert_match_id: $insert_match_id \n";
 */
+// get the matched_remark information
+   $sql_matched_remark = "select firstName, lastName, gender, Age from biometData where eyesPath = 'suspectsUpload/eyes/$db_image';";
+
+$result = mysql_query($sql_matched_remark, $link)
+                   or die ('MySQL Error: ' . mysql_error());
+while($row = mysql_fetch_assoc($result)){
+  if (strlen($row['firstName'])>0) {
+    echo $row['firstName'] ;
+   }
+  
+   if (strlen($row['lastName'])>0) {
+    echo $row['lastName']  ;
+   }
+ 
+  if (strlen($row['gender'])>0) {
+    echo $row['gender'] ;
+   }
+
+  if (strlen($row['Age'])>0) {
+    echo $row['Age']  ;
+   }
+   $matched_remark = "firstName:" . $row['firstName'] . "; lastName:" . $row['lastName'] . "; gender:" . $row['gender'] . "; Age:" . $row['Age'];
+  
+
+}
+
    $matched_scored = 0.6; //returned
 
    $path = "/home/zhaowenlong/workspace/proj/dev.php/matched/138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
@@ -102,10 +128,10 @@ if(!mysql_select_db('biomet', $link)){
    $matched_image = "suspectsUpload/matched/$basename_image";
    echo "[DEBUG]matched_image: $matched_image \n"; 
 
-   $matched_remark = "the eyes match";
-   //echo "[DEBUG]matched_remark: $matched_remark \n"; 
+   //$matched_remark = "the eyes match";
+   echo "[DEBUG]matched_remark: $matched_remark \n"; 
    //To match the data in eyesMatchResulted
-   $sql_matched = "update eyesMatchResulted e, biometData b set e.matchedScored = 0.6, e.matchedPath ='$matched_image', e.matchedRemark = '$matched_remark' where e.idbiometData = b.idbiometData and b.eyesPath='suspectsUpload/eyes/$db_image';  ";
+   $sql_matched = "update eyesMatchResulted e, biometData b set e.matchedScored = 0.6, e.matchedPath ='$matched_image', e.matchedRemark = '$matched_remark' where e.idbiometData = b.idbiometData and b.eyesPath = 'suspectsUpload/eyes/$db_image';  ";
    //$sql_matched = "insert into eyesMatchResulted (ideyesMatchResulted,idbiometData, matchedScored,matchedPath, matchedRemark) values ($insert_match_id,$id_biomet, 0.6, '$matched_image', '$matched_remark');";
    echo "[DEBUG]sql_matched: $sql_matched \n"; 
    $result_matched = mysql_query($sql_matched, $link) 
@@ -114,7 +140,7 @@ if(!mysql_select_db('biomet', $link)){
 
  //4) -- auto upload the matched image to the server
 
-// the function file_get_contents cannot support bmp file
+//TODO: the function file_get_contents cannot support bmp file
 $image_contents = file_get_contents($path);
 
 //cd to the defined dir
