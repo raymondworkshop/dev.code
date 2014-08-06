@@ -43,6 +43,7 @@ $stream = ssh2_exec($connection, $script);
 
 
 //1) download the dataset from the server
+//TODO: add parameters to seperate the functions
 $sftp = new Net_SFTP('csdoor2.comp.polyu.edu.hk');
 if(!$sftp->login('biomet', 'saospiet')){
    exit('Login Failed');
@@ -140,7 +141,7 @@ while($row = mysql_fetch_assoc($result)){
 
  //4) -- auto upload the matched image to the server
 
-//TODO: the function file_get_contents cannot support bmp file
+//the function file_get_contents cannot support bmp file
 $image_contents = file_get_contents($path);
 
 //cd to the defined dir
