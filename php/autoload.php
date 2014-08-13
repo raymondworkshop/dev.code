@@ -3,6 +3,10 @@
 //include("SFTPConnection.php");
 include('Net/SFTP.php');
 
+function dosPath($path){
+     return str_replace('/', '\\',$path);
+}
+
 //try {
 /*
     $sftp = new SFTPConnection('csdoor2.comp.polyu.edu.hk', 22);
@@ -41,28 +45,11 @@ $stream = ssh2_exec($connection, $script);
 ;
 */
 
-
 //1) download the dataset from the server
 //TODO: add parameters to seperate the functions
 $sftp = new Net_SFTP('csdoor2.comp.polyu.edu.hk');
 if(!$sftp->login('biomet', 'saospiet')){
    exit('Login Failed');
-}
-
-echo $sftp->pwd() ."\r\n";
-
-$image_dir = '/home/biomet/public_html/project/suspectsUpload/eyes/';
-$local_dir = '/home/zhaowenlong/workspace/proj/dev.php/eyes/';
-$sftp->chdir($image_dir);
-chdir($local_dir);
-
-//print_r($sftp->nlist($image_dir));
-$arr = $sftp->nlist($image_dir);
-print_r($arr);
-foreach($arr as $k => $img){
-   echo "[DEBUG]\$arr[$k] => $img\n";
-   
-   $sftp->get($img, $img);
 }
 
 //connect to the database
@@ -75,6 +62,84 @@ if(!mysql_select_db('biomet', $link)){
     echo 'Could not select database';
     exit;
 }
+
+#For cross-platform
+#define('DS','/');
+#define('BASE_ROOT', str_replace('\\', DS,dirname(__FILE__)));
+$default_server_dir = "/home/biomet/public_html/project";
+$default_local_dir = "c:/php/autoload";
+echo $sftp->pwd() ."\r\n";
+
+$arr = array (
+       "eyesPath" => "$default_server_dir/suspectsUpload/eyes"
+	   #"irisPath" => "$default_server_dir/suspectsUpload/iris",
+	  #"facePath" => "$default_server_dir/suspectsUpload/face",
+	  # "fingerPath" => "$default_server_dir/suspectsUpload/finger"
+);
+
+foreach ( $arr as $key => $value) {
+    #For eyes, iris, face, finger
+    echo "[DEBUG]$key => $value\n";
+	
+	#mkdir a related local dir if it doesnot exist	
+	$local_dir = dosPath("$default_local_dir/$key");	
+	echo "[DEBUG]local_dir:$local_dir\n";
+	
+	if(file_exists($local_dir) && is_dir($local_dir)){
+	     echo "[DEBUG]dir $local_dir exists \n";
+	}
+	else {
+	     echo "[DEBUG]dir $local_dir not exists \n";
+		 #mkdir the dir	
+		 #NOTICE: realpath function only work if the dir exists
+         #$local = realpath("$local_dir"); 
+		 mkdir($local_dir);		 
+	}
+	
+	#on the local, switch to the related defiend dir
+	#c:/php/autoload/eyesPath
+	chdir($local_dir);
+	#on the server, switch to the related defined dir
+	#/home/biomet/public_html/project/suspectsUpload/eyes
+	$sftp->chdir($value);
+	
+	#list the images in the dir in the server
+	$list = $sftp->nlist($value);
+    print_r($list);
+	
+	#get the related image dir from table biometData
+	$sql_isDownload = "select $key from biometData where isDownload = 0;";
+    $result = mysql_query($sql_isDownload, $link)
+                   or die ('MySQL Error: ' . mysql_error());
+				   
+    while($row = mysql_fetch_assoc($result)){
+	     #download each image
+	     if (strlen($row[$key])>0) {
+		     # the related server dir
+			 //echo "[DEBUG]row-key:$row[$key]" ;
+		     $image = "$default_server_dir/$row[$key]";
+             echo "[DEBUG]images:$image\n" ;
+			 
+			 $img = basename($image);
+			 echo "[DEBUG]img:$img\n" ;
+			 #get the related image
+			 $sftp->get($img, $img);
+			 
+			 #update the flag in biometData
+			 # should have four flags ...
+			 $flag_isDownload = "update biometData set isDownload = 1 where eyesPath = '$row[$key]' or irisPath = '$row[$key]' or facePath = '$row[$key]' or fingerPath = '$row[$key]';";
+             echo "[DEBUG]flag_isDownload: $flag_isDownload \n";
+			 
+             $result_matched = mysql_query($flag_isDownload, $link) 
+                     or die ('MySQL Error: ' . mysql_error());
+					 
+             echo "[DEBUG]update a flag to biometData \n";
+		}
+    }
+}
+
+
+// Database operations
 
 //Assume logo.jpg from the camera matches some picture, for example 140696050427-748138217021250-66310_L_5_Eyelid.bmp
 //2) fetch the related information of 140696050427-748138217021250-66310_L_5_Eyelid.bmp from table biometData
@@ -97,35 +162,42 @@ if(!mysql_select_db('biomet', $link)){
    echo "[DEBUG]insert_match_id: $insert_match_id \n";
 */
 // get the matched_remark information
-   $sql_matched_remark = "select firstName, lastName, gender, Age from biometData where eyesPath = 'suspectsUpload/eyes/$db_image';";
+$sql_matched_remark = "select firstName, lastName, gender, Age from biometData where eyesPath = 'suspectsUpload/eyes/$db_image';";
 
 $result = mysql_query($sql_matched_remark, $link)
                    or die ('MySQL Error: ' . mysql_error());
+
+$separator = "; ";			   
 while($row = mysql_fetch_assoc($result)){
   if (strlen($row['firstName'])>0) {
-    echo $row['firstName'] ;
+     $firstname = $row['firstName'] ;
+	 $matched_remark = "FirstName: " . $firstname . $separator;
    }
   
    if (strlen($row['lastName'])>0) {
-    echo $row['lastName']  ;
+     $lastname = $row['lastName'] ;
+	 $matched_remark = $matched_remark . "LastName: " . $lastname . $separator;
    }
  
   if (strlen($row['gender'])>0) {
-    echo $row['gender'] ;
+     $gender = $row['gender'] ;
+	 $matched_remark = $matched_remark . "Gender: " . $gender . $separator;
    }
 
   if (strlen($row['Age'])>0) {
-    echo $row['Age']  ;
+     $age = $row['Age']  ;
+	 $matched_remark = $matched_remark . "Gender: " . $age ;
    }
-   $matched_remark = "firstName:" . $row['firstName'] . "; lastName:" . $row['lastName'] . "; gender:" . $row['gender'] . "; Age:" . $row['Age'];
-  
-
+   #$matched_remark = "firstName:" . $firstname . "; lastName:" . $row['lastName'] . "; gender:" . $row['gender'] . "; Age:" . $row['Age'];
+    
 }
-
+   echo "[DEBUG]matched_remark: $matched_remark\n";
    $matched_scored = 0.6; //returned
 
-   $path = "/home/zhaowenlong/workspace/proj/dev.php/matched/138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
-   $basename_image  = basename($path);
+   //$path = "c:\php\autoload\matched\138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
+   //$path = "matched\138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
+   //$basename_image  = basename($path);
+   $basename_image  = "138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
    $matched_image = "suspectsUpload/matched/$basename_image";
    echo "[DEBUG]matched_image: $matched_image \n"; 
 
@@ -137,12 +209,17 @@ while($row = mysql_fetch_assoc($result)){
    echo "[DEBUG]sql_matched: $sql_matched \n"; 
    $result_matched = mysql_query($sql_matched, $link) 
                      or die ('MySQL Error: ' . mysql_error());
-   echo "[DEBUG]update a row to faceMatchResulted \n";
+   echo "[DEBUG]update a row to eyesMatchResulted \n";
 
  //4) -- auto upload the matched image to the server
-
 //the function file_get_contents cannot support bmp file
-$image_contents = file_get_contents($path);
+// defined windows local dir
+$windows_dir = "/php/autoload/matched";
+$image_dir = realpath("$windows_dir/$basename_image") ;
+echo "[DEBUG]image_dir: $image_dir \n"; 
+//$image_contents = file_get_contents("c:\php\autoload\matched\138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg");
+
+$image_contents = file_get_contents($image_dir);
 
 //cd to the defined dir
 $remote_dir = '/home/biomet/public_html/project/suspectsUpload/matched';
@@ -179,6 +256,7 @@ if(!$result) {
   }
 }
 //close the connection
+
 mysql_close($link);
 
 

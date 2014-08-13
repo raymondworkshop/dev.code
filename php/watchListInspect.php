@@ -96,8 +96,8 @@ if ($message == "Invalid Login!")
 			if(strlen($row['eyesPath'])>0){
 				echo "<tr><td class='content'><b>Eye : </b></td>";
 				echo "<td><img src=\"". $row['eyesPath']."\" width=\"200\" ></td>" ;
-				echo "<td class='content'>".$row['eyesScored']."</td>";
-			    echo "<td class='content'><img src=\"". $row['eyesMatchedPath']."\" width=\"200\" ></td>" ;
+				echo "<td class='content'><div align=center> ".$row['eyesScored']." </div></td>";
+			    echo "<td><div align=center><img src=\"". $row['eyesMatchedPath']."\" width=\"200\" ></div></td>" ;
 				echo "<td class='content'>".$row['eyesMatchedRemark']."</td></tr>";			   }
 		}
 		
