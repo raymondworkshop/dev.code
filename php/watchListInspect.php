@@ -27,6 +27,22 @@ if ($message == "Invalid Login!")
 			echo 'Could not select database';
 			exit;
 		}
+		
+function colValue($str){
+	 #FirstName: ray; LastName: zhao; Gender: M; Age: 2
+	 $string = " ";
+	 #echo "<td class='content'>";
+	 for($i=0; $i<count($str); $i++){
+	     #echo "$str[$i]\n";
+		 $field = explode(":", $str[$i]);
+		 
+		 #echo "$field[0]=> $field[1]\n";
+		$string = $string . "$field[0]:" . "<font color='red'>$field[1]</font>";
+     } 
+	 
+	
+	 return $string;
+}
 
 	//	$sql    = "select firstname,lastname,facePath,fingerPath,irisPath,eyesPath FROM biometData where userName = '$userName'   ;";
 		
@@ -50,9 +66,6 @@ if ($message == "Invalid Login!")
 			exit;
 		}
 
-	
-		
-		
 		echo "</table>"; 
 		echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
 		echo "<tr><td class='content'>Return to <a href='suspectsData.php'>Update Suspects Data</a> page.</td></tr>";
@@ -74,31 +87,56 @@ if ($message == "Invalid Login!")
 			if(strlen($row['facePath'])>0){
 				echo "<tr><td class='content'><b>Face : </b></td>";
 				echo "<td><img src=\"". $row['facePath']."\" width=\"200\" ></td>" ;
-				echo "<td class='content'>".$row['faceScored']."</td>";
-				echo "<td class='content'><img src=\"". $row['faceMatchedPath']."\" width=\"200\" ></td>" ;
-				echo "<td class='content'>".$row['faceMatchedRemark']."</td></tr>";
+				echo "<td class='content'><div align=center>".$row['faceScored']."</div></td>";
+				echo "<td class='content'><div align=center><img src=\"". $row['faceMatchedPath']."\" width=\"200\" ></div></td>" ;
+				
+				$arr = explode(";", $row['facePath']);
+				$details = colValue($arr);
+				echo "<td class='content'><div align=center>".$details."</div></td></tr>";
 			   }
 			  
 			if(strlen($row['fingerPath'])>0){
 			    echo "<tr><td class='content'><b>Fingerprint : </b></td>";
 				echo "<td><img src=\"". $row['fingerPath']."\" width=\"200\" ></td>" ;
-				echo "<td class='content'>".$row['fingerScored']."</td>";
-			    echo "<td class='content'><img src=\"". $row['fingerMatchedPath']."\" width=\"200\" ></td>" ;
-				echo "<td class='content'>".$row['fingerMatchedRemark']."</td></tr>";			   }
+				echo "<td class='content'><div align=center>".$row['fingerScored']."</div></td>";
+			    echo "<td class='content'><div align=center><img src=\"". $row['fingerMatchedPath']."\" width=\"200\" ></div></td>" ;
+				
+				$arr = explode(";", $row['fingerPath']);
+				$details = colValue($arr);
+				echo "<td class='content'><div align=center>".$details."</div></td></tr>";			  
+			}
 			   
 			if(strlen($row['irisPath'])>0){
 				 echo "<tr><td class='content'><b>Iris : </b></td>";
 				echo "<td><img src=\"". $row['irisPath']."\" width=\"200\" ></td>" ;
-				echo "<td class='content'>".$row['irisScored']."</td>";
-				echo "<td class='content'><img src=\"". $row['irisMatchedPath']."\" width=\"200\" ></td>" ;
-				echo "<td class='content'>".$row['irisMatchedRemark']."</td></tr>";			   }
+				echo "<td class='content'><div align=center>".$row['irisScored']."</div></td>";
+				echo "<td><div align=center><img src=\"". $row['irisMatchedPath']."\" width=\"200\" ></div></td>" ;
+				
+				$arr = explode(";", $row['irisMatchedPath']);
+				$details = colValue($arr);
+				echo "<td class='content'><div align=center>".$details."</div></td></tr>";			   
+				
+			}
 			   
 			if(strlen($row['eyesPath'])>0){
 				echo "<tr><td class='content'><b>Eye : </b></td>";
 				echo "<td><img src=\"". $row['eyesPath']."\" width=\"200\" ></td>" ;
 				echo "<td class='content'><div align=center> ".$row['eyesScored']." </div></td>";
 			    echo "<td><div align=center><img src=\"". $row['eyesMatchedPath']."\" width=\"200\" ></div></td>" ;
-				echo "<td class='content'>".$row['eyesMatchedRemark']."</td></tr>";			   }
+				
+				$arr = explode(";", $row['eyesMatchedRemark']);
+				#$details = " ";
+				#echo "<td class='content'>";
+	            #for($i=0; $i<count($arr); $i++){
+	            #echo "$arr[$i]\n";
+		        #     $field = explode(":", $arr[$i]);
+		 
+		             #echo "$field[0]=> $field[1]\n";
+				#	 $details = $details . "$field[0]:" . "<font color='red'>$field[1]</font>";
+                # }
+				 $details = colValue($arr);
+				 
+				 echo "<td class='content'><div align=center>".$details."</div></td></tr>";			   }
 		}
 		
 		echo "</table>";

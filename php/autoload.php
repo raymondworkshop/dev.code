@@ -71,25 +71,25 @@ $default_local_dir = "c:/php/autoload";
 echo $sftp->pwd() ."\r\n";
 
 $arr = array (
-       "eyesPath" => "$default_server_dir/suspectsUpload/eyes"
-	   #"irisPath" => "$default_server_dir/suspectsUpload/iris",
-	  #"facePath" => "$default_server_dir/suspectsUpload/face",
-	  # "fingerPath" => "$default_server_dir/suspectsUpload/finger"
+       "eyesPath" => "suspectsUpload/eyes"
+	   #"irisPath" => "suspectsUpload/iris",
+	  #"facePath" => "suspectsUpload/face",
+	  # "fingerPath" => "suspectsUpload/finger"
 );
 
 foreach ( $arr as $key => $value) {
     #For eyes, iris, face, finger
-    echo "[DEBUG]$key => $value\n";
+    echo "[DEBUG]:$key => $value\n";
 	
 	#mkdir a related local dir if it doesnot exist	
 	$local_dir = dosPath("$default_local_dir/$key");	
-	echo "[DEBUG]local_dir:$local_dir\n";
+	echo "[DEBUG]:local_dir:$local_dir\n";
 	
 	if(file_exists($local_dir) && is_dir($local_dir)){
-	     echo "[DEBUG]dir $local_dir exists \n";
+	     echo "[DEBUG]:dir $local_dir exists \n";
 	}
 	else {
-	     echo "[DEBUG]dir $local_dir not exists \n";
+	     echo "[DEBUG]:dir $local_dir not exists \n";
 		 #mkdir the dir	
 		 #NOTICE: realpath function only work if the dir exists
          #$local = realpath("$local_dir"); 
@@ -101,36 +101,39 @@ foreach ( $arr as $key => $value) {
 	chdir($local_dir);
 	#on the server, switch to the related defined dir
 	#/home/biomet/public_html/project/suspectsUpload/eyes
-	$sftp->chdir($value);
+	$server_dir = "$default_server_dir/$value";
+	$sftp->chdir($server_dir);
 	
 	#list the images in the dir in the server
-	$list = $sftp->nlist($value);
+	$list = $sftp->nlist($server_dir);
     print_r($list);
 	
+	#echo "[DEBUG]:key->$key \n" ;
 	#get the related image dir from table biometData
 	$sql_isDownload = "select $key from biometData where isDownload = 0;";
     $result = mysql_query($sql_isDownload, $link)
                    or die ('MySQL Error: ' . mysql_error());
 				   
     while($row = mysql_fetch_assoc($result)){
+	     #echo "[DEBUG]: row:$row[$key]\n";
 	     #download each image
 	     if (strlen($row[$key])>0) {
 		     # the related server dir
 			 //echo "[DEBUG]row-key:$row[$key]" ;
 		     $image = "$default_server_dir/$row[$key]";
-             echo "[DEBUG]images:$image\n" ;
+             echo "[DEBUG]:images:$image\n" ;
 			 
 			 $img = basename($image);
-			 echo "[DEBUG]img:$img\n" ;
+			 echo "[DEBUG]:img:$img\n" ;
 			 #get the related image
 			 $sftp->get($img, $img);
 			 
 			 #update the flag in biometData
 			 # should have four flags ...
-			 $flag_isDownload = "update biometData set isDownload = 1 where eyesPath = '$row[$key]' or irisPath = '$row[$key]' or facePath = '$row[$key]' or fingerPath = '$row[$key]';";
-             echo "[DEBUG]flag_isDownload: $flag_isDownload \n";
+			 $isDownload = "update biometData set isDownload = 1 where eyesPath = '$row[$key]' or irisPath = '$row[$key]' or facePath = '$row[$key]' or fingerPath = '$row[$key]';";
+             echo "[DEBUG]:isDownload: $isDownload \n";
 			 
-             $result_matched = mysql_query($flag_isDownload, $link) 
+             $result_matched = mysql_query($isDownload, $link) 
                      or die ('MySQL Error: ' . mysql_error());
 					 
              echo "[DEBUG]update a flag to biometData \n";
@@ -186,12 +189,12 @@ while($row = mysql_fetch_assoc($result)){
 
   if (strlen($row['Age'])>0) {
      $age = $row['Age']  ;
-	 $matched_remark = $matched_remark . "Gender: " . $age ;
+	 $matched_remark = $matched_remark . "Age: " . $age ;
    }
    #$matched_remark = "firstName:" . $firstname . "; lastName:" . $row['lastName'] . "; gender:" . $row['gender'] . "; Age:" . $row['Age'];
     
 }
-   echo "[DEBUG]matched_remark: $matched_remark\n";
+   echo "[DEBUG]:matched_remark: $matched_remark\n";
    $matched_scored = 0.6; //returned
 
    //$path = "c:\php\autoload\matched\138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
@@ -199,17 +202,17 @@ while($row = mysql_fetch_assoc($result)){
    //$basename_image  = basename($path);
    $basename_image  = "138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
    $matched_image = "suspectsUpload/matched/$basename_image";
-   echo "[DEBUG]matched_image: $matched_image \n"; 
+   echo "[DEBUG]:matched_image: $matched_image \n"; 
 
    //$matched_remark = "the eyes match";
-   echo "[DEBUG]matched_remark: $matched_remark \n"; 
+   echo "[DEBUG]:matched_remark: $matched_remark \n"; 
    //To match the data in eyesMatchResulted
    $sql_matched = "update eyesMatchResulted e, biometData b set e.matchedScored = 0.6, e.matchedPath ='$matched_image', e.matchedRemark = '$matched_remark' where e.idbiometData = b.idbiometData and b.eyesPath = 'suspectsUpload/eyes/$db_image';  ";
    //$sql_matched = "insert into eyesMatchResulted (ideyesMatchResulted,idbiometData, matchedScored,matchedPath, matchedRemark) values ($insert_match_id,$id_biomet, 0.6, '$matched_image', '$matched_remark');";
-   echo "[DEBUG]sql_matched: $sql_matched \n"; 
+   echo "[DEBUG]:sql_matched: $sql_matched \n"; 
    $result_matched = mysql_query($sql_matched, $link) 
                      or die ('MySQL Error: ' . mysql_error());
-   echo "[DEBUG]update a row to eyesMatchResulted \n";
+   echo "[DEBUG]:update a row to eyesMatchResulted \n";
 
  //4) -- auto upload the matched image to the server
 //the function file_get_contents cannot support bmp file
@@ -252,7 +255,7 @@ if(!$result) {
 } else {
    //fetch the data
    while($row = mysql_fetch_array($result)){
-     echo "[DEBUG]idbiometData:".$row{'idbiometData'}." eyesPath:".$row{'eyesPath'}."\n";
+     echo "[DEBUG]:idbiometData:".$row{'idbiometData'}." eyesPath:".$row{'eyesPath'}."\n";
   }
 }
 //close the connection
