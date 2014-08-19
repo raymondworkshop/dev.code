@@ -17,17 +17,6 @@ if ($message == "Invalid Login!")
   </tr>
 
 <?php		
-	
-		if ( $userName != "" ){
-		$link = mysql_connect('mysql.comp.polyu.edu.hk','biomet', 'qwkdjmxn');
-		if (!$link) {
-			die('Could not connect: ' . mysql_error());
-		}
-		if (!mysql_select_db('biomet', $link)) {
-			echo 'Could not select database';
-			exit;
-		}
-		
 function colValue($str){
 	 #FirstName: ray; LastName: zhao; Gender: M; Age: 2
 	 $string = " ";
@@ -40,10 +29,19 @@ function colValue($str){
 		$string = $string . "$field[0]:" . "<font color='red'>$field[1]</font>";
      } 
 	 
-	
 	 return $string;
-}
-
+}	
+	
+if ( $userName != "" ){
+		$link = mysql_connect('mysql.comp.polyu.edu.hk','biomet', 'qwkdjmxn');
+		if (!$link) {
+			die('Could not connect: ' . mysql_error());
+		}
+		if (!mysql_select_db('biomet', $link)) {
+			echo 'Could not select database';
+			exit;
+		}
+		
 	//	$sql    = "select firstname,lastname,facePath,fingerPath,irisPath,eyesPath FROM biometData where userName = '$userName'   ;";
 		
 		$sql    = "select clientIp,main.idbiometData,firstname,lastname,facePath,fingerPath,irisPath,eyesPath,
@@ -90,7 +88,7 @@ function colValue($str){
 				echo "<td class='content'><div align=center>".$row['faceScored']."</div></td>";
 				echo "<td class='content'><div align=center><img src=\"". $row['faceMatchedPath']."\" width=\"200\" ></div></td>" ;
 				
-				$arr = explode(";", $row['facePath']);
+				$arr = explode(";", $row['faceMatchedRemark']);
 				$details = colValue($arr);
 				echo "<td class='content'><div align=center>".$details."</div></td></tr>";
 			   }
@@ -101,7 +99,7 @@ function colValue($str){
 				echo "<td class='content'><div align=center>".$row['fingerScored']."</div></td>";
 			    echo "<td class='content'><div align=center><img src=\"". $row['fingerMatchedPath']."\" width=\"200\" ></div></td>" ;
 				
-				$arr = explode(";", $row['fingerPath']);
+				$arr = explode(";", $row['fingerMatchedRemark']);
 				$details = colValue($arr);
 				echo "<td class='content'><div align=center>".$details."</div></td></tr>";			  
 			}
@@ -112,7 +110,7 @@ function colValue($str){
 				echo "<td class='content'><div align=center>".$row['irisScored']."</div></td>";
 				echo "<td><div align=center><img src=\"". $row['irisMatchedPath']."\" width=\"200\" ></div></td>" ;
 				
-				$arr = explode(";", $row['irisMatchedPath']);
+				$arr = explode(";", $row['irisMatchedRemark']);
 				$details = colValue($arr);
 				echo "<td class='content'><div align=center>".$details."</div></td></tr>";			   
 				

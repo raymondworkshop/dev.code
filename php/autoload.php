@@ -189,11 +189,15 @@ while($row = mysql_fetch_assoc($result)){
 
   if (strlen($row['Age'])>0) {
      $age = $row['Age']  ;
-	 $matched_remark = $matched_remark . "Age: " . $age ;
+	 $matched_remark = $matched_remark . "Age: " . $age . $separator ;
    }
    #$matched_remark = "firstName:" . $firstname . "; lastName:" . $row['lastName'] . "; gender:" . $row['gender'] . "; Age:" . $row['Age'];
     
 }
+   #camera and gate number
+   $camera = 06;
+   $gateNum = 02;
+   $matched_remark = $matched_remark . "Camera: " . $camera. $separator . "GateNum: " . $gateNum;
    echo "[DEBUG]:matched_remark: $matched_remark\n";
    $matched_scored = 0.6; //returned
 

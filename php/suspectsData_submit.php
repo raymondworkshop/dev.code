@@ -1,6 +1,7 @@
 <?php
 include("common.php");
 include("header.php");
+#$id  = 0;
 
  function imageDataPath($path,$type)
 {
@@ -41,6 +42,21 @@ include("header.php");
 return $imagePath;
 }
 
+function colValue($str){
+	 #FirstName: ray; LastName: zhao; Gender: M; Age: 2
+	 $string = " ";
+	 #echo "<td class='content'>";
+	 for($i=0; $i<count($str); $i++){
+	     #echo "$str[$i]\n";
+		 $field = explode(":", $str[$i]);
+		 
+		 #echo "$field[0]=> $field[1]\n";
+		$string = $string . "$field[0]:" . "<font color='red'>$field[1]</font>";
+     } 
+	 
+	 return $string;
+}	
+
 /*
 	$message = (isset($_SESSION["message"]) ? $_SESSION["message"] : "");	
 		if ($message != ""){
@@ -64,17 +80,14 @@ if(!((strlen($_FILES["facePath"]["name"])>0)
    $message = "At least one image need to be uploaded<br>";
    }
 
-
-
-
 if ($firstname == "")
 	$message .= "firstname cannot be empty<br>";
 if ($gender == "")
-	$message .= "Gender cannot be empty<br>";
+	$message .= "Gender cannot be empty,zhao<br>";
 if ($lastname == "")
 	$message .= "lastname cannot be empty<br>";
-
-	if  ($message != "")
+	
+if  ($message != "")
 {
 	$_SESSION["message"] = $message;
 	
@@ -106,37 +119,147 @@ else
 
 	$clientIP=$_SERVER['REMOTE_ADDR'];
 
-//$userName
-	$link = mysql_connect('mysql.comp.polyu.edu.hk', 'biomet', 'qwkdjmxn');
-	mysql_select_db("biomet");
-	$sql = "insert into biometData (firstname, lastname, gender, Age, facePath, fingerPath, irisPath, eyesPath,userName,clientIp) values ('$firstname', '$lastname', '$gender', '$age', '$facePath', '$fingerPath', '$irisPath', '$eyesPath','$userName','$clientIP');";
-	$result = mysql_query($sql, $link);
+   //$userName
+   ##For the replicated name
+   #for database connection
+	//connect to the database
+    $link = mysql_connect('mysql.comp.polyu.edu.hk:3306', 'biomet', 'qwkdjmxn') 
+        or die('Unable to connect: ' . mysql_error());
+    #echo "Connected to MySQL \n";
 
-	if (!$result) {
-		echo "DB Error, could not query the database\n";
-		echo 'MySQL Error: ' . mysql_error();
-		exit;
-	}
-
-	mysql_free_result($result);
+    //select a database to work with
+    if(!mysql_select_db('biomet', $link)){
+          echo 'Could not select database';
+         exit;
+     }
+     #echo "$firstname $lastname\n";
+     $query_sql = "select firstName,lastName from biometData where firstName = '$firstname' and lastName= '$lastname';";
+     $query_result = mysql_query($query_sql, $link)
+                or die ('MySQL Error: ' . mysql_error());
 	
-	if(strlen($facePath)>0){
-		$sqlMaxId = " select idbiometData from biometData where facePath = '$facePath' and userName = '$userName';";
-		$resultData = mysql_query($sqlMaxId,$link);
-		$rt_idbiometData = mysql_result($resultData, 0,idbiometData);
-		mysql_free_result($resultData);
-		$sqlMatched = "insert into faceMatchResulted (idbiometData, matchedRemark) values ('$rt_idbiometData', 'no data yet');";
-		$resultMatched = mysql_query($sqlMatched, $link);
-		if (!$resultMatched) {
+	 while($row = mysql_fetch_assoc($query_result)){
+	     $first_name = $row['firstName'];
+		 $last_name = $row['lastName'];
+     }	 
+	mysql_free_result($query_result);
+	
+    if(strlen($first_name)>0 and strlen($last_name)>0) {
+	    #echo "Replication Suspects Name";
+	 #if name replication
+	  		 echo "</table>"; 
+		     echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
+		     echo "<tr><td class='content'><font color='red'>Suspect Name Replication. Please choose the Candidates</font></td></tr>";
+		     #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
+		     #echo "</table>";
+	     
+		     #echo "</table>"; 
+		     #echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
+		     echo "<tr><td class='content'>Return to <a href='suspectsData.php'>Update Suspects Data</a> page.</td></tr>";
+		     #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
+		     echo "</table>";
+	
+	         echo "<table width='960' border='1' align='center' cellpadding='0' cellspacing='0' class='bgColor' >";
+		     echo "<tr>";
+		     echo "<th class='heading'>Choice</th>";
+			 echo "<th class='heading'></th>";
+		     echo "<th class='heading' style='color:blue;'>Replicated Suspects</th>";
+		     
+		     #echo "<th class='heading'>Replicated Subject</th>";
+		     echo "<th class='heading'>Details</th>";
+		     echo "</tr>";
+		
+         $query_sql = "select idbiometData, firstName,lastName,eyesPath,facePath,fingerPath,irisPath,clientIp,gender, Age from biometData where firstName = '$firstname' and lastName= '$lastname';";
+         $query_result = mysql_query($query_sql, $link)
+                or die ('MySQL Error: ' . mysql_error());		
+        while($row = mysql_fetch_assoc($query_result)){				
+
+	         #$eyes_path = $row['eyesPath'];
+	         #echo "Name: $first_name  $last_name \n";
+    
+	         echo "<tr><td colspan='4' class='content'><p align=\"left\">Suspects Name:<b>". $row['lastName'] ." ".$row['firstName']." Uploader Ip(".$row['clientIp'].")</b></a></p></td></tr>";
+			   
+			if(strlen($row['eyesPath'])>0){
+			    $id = $row['idbiometData'];
+			    echo "<tr>";
+			    #echo "<td><form action='suspectsChoice_submit.php' method = 'post'>
+				echo "<td> <form action='suspectsChoice_submit.php' method = 'post'><rowspan='2'> 
+				<input type = 'radio' name='choice' value='Yes' />Yes
+                <input type = 'radio' name='choice' value='No' checked />No
+				
+                <input type='submit' name='submit' value='Submit' /> 				
+				</form></td>";
+				
+				echo "<td class='content'><b><div align=center>Eye : </div></b></td>";
+				echo "<td><div align=center><img src=\"". $row['eyesPath']."\" width=\"200\" ></div></td>" ;		
+				#$arr = explode(";", $row['eyesMatchedRemark']);
+				# $details = colValue($arr);
+				 $separate = "; ";
+				 $first_name =  $row['firstName'];
+	             $last_name =  $row['lastName'];
+				 $name = "FirstName:" . $first_name . $separate ."LastName: " . $last_name ;
+				 $age = $row['Age'];
+				 $gender = $row['gender'];
+				 $other = $name . $separate .  "Age:" . $first_name . $separate ."Gender: " . $last_name ;
+				 $arr = explode(";", $other);
+				 #$detail = $name . $separate . $other;
+				 #$details = "no data";
+				 
+				 	            #for($i=0; $i<count($arr); $i++){
+	            #echo "$arr[$i]\n";
+		        #     $field = explode(":", $arr[$i]);
+		 
+		             #echo "$field[0]=> $field[1]\n";
+				#	 $details = $details . "$field[0]:" . "<font color='red'>$field[1]</font>";
+                # }
+				 
+				 $details = colValue($arr);
+				 echo "<td class='content'><div align=center>".$details."</div></td></tr>";			   
+			}
+		
+		
+		# echo "</table>";
+		#echo "<br>";
+		#echo "<table width='780' border='0' align='center' cellpadding='0' cellspacing='0'>";
+		#echo "<tr><td  class='content'><p align=\"left\">Copyright © 2013 Department of Computing, The Hong Kong Polytechnic University. All rights reserved.  </p></td></tr>";
+		#echo "</table>";	
+		#echo "<br>";		
+
+        }
+		
+		mysql_free_result($query_result);
+	}
+  else {
+
+	    #$link = mysql_connect('mysql.comp.polyu.edu.hk', 'biomet', 'qwkdjmxn');
+	    #mysql_select_db("biomet");
+	    $sql = "insert into biometData (firstname, lastname, gender, Age, facePath, fingerPath, irisPath, eyesPath,userName,clientIp) values ('$firstname', '$lastname', '$gender', '$age', '$facePath', '$fingerPath', '$irisPath', '$eyesPath','$userName','$clientIP');";
+	    $result = mysql_query($sql, $link);
+
+	    if (!$result) {
+		     echo "DB Error, could not query the database\n";
+		     echo 'MySQL Error: ' . mysql_error();
+		     exit;
+	     }
+
+	     mysql_free_result($result);
+	
+	    if(strlen($facePath)>0){
+		     $sqlMaxId = " select idbiometData from biometData where facePath = '$facePath' and userName = '$userName';";
+		     $resultData = mysql_query($sqlMaxId,$link);
+		     $rt_idbiometData = mysql_result($resultData, 0,idbiometData);
+		     mysql_free_result($resultData);
+		     $sqlMatched = "insert into faceMatchResulted (idbiometData, matchedRemark) values ('$rt_idbiometData', 'no data yet');";
+		     $resultMatched = mysql_query($sqlMatched, $link);
+		    if (!$resultMatched) {
 			echo "DB Error, could not query the database\n";
 			echo 'MySQL Error: ' . mysql_error();
 			exit;
-		}
-		mysql_free_result($resultMatched);
-	}
+		    }
+		    mysql_free_result($resultMatched);
+	    }
 	
 		if(strlen($fingerPath)>0){
-		$sqlMaxId = " select idbiometData from biometData where fingerPath = '$fingerPath' and userName = '$userName';";
+		    $sqlMaxId = " select idbiometData from biometData where fingerPath = '$fingerPath' and userName = '$userName';";
 		$resultData = mysql_query($sqlMaxId,$link);
 		$rt_idbiometData = mysql_result($resultData, 0,idbiometData);
 		mysql_free_result($resultData);
@@ -180,35 +303,23 @@ else
 		mysql_free_result($resultMatched);
 		}
 	
-	
-	
-	
-	
-	
+	 	     echo "</table>"; 
+		     echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
+			 echo "<tr><td class='content'><font color='red'>Suspects Data Updated</font></td></tr>";
+		     #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
+		     #echo "</table>";
+	     
+		     #echo "</table>"; 
+		     #echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
+		     echo "<tr><td class='content'>Return to <a href='suspectsData.php'>Update Suspects Data</a> page.</td></tr>";
+		     #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
+	         echo "</table>";
+	}
 }
-
 ?>
-<tr>
-   <td valign="top" class="bgColor">
-    <table width="760" border="0" cellspacing="0" cellpadding="0">
-     <tr>
-       <td width="10" height="30" class="content">&nbsp;</td>
-       <td width="740" height="30" class="heading">Suspects Data Updated!</td>
-       <td width="10" height="30" class="content">&nbsp;</td>
-     </tr>
-	 <tr>
-	   <td width="10" class="content">&nbsp;</td>
-       <td width="740" height="30" class="content">One suspects data was updated. Please return back to <a href="suspectsData.php">Update Suspects Data</a> page.</td>
-	   <td width="10" class="content">&nbsp;</td>
-	 </tr>
-	 <tr>
-	   <td class="content">&nbsp;</td>
-	   <td width="740" height="30" class="heading">&nbsp;</td>
-	   <td class="content">&nbsp;</td>
-	 </tr>
-    </table>
-   </td>
-  </tr>
+
+
+
 <?php
-include("footer.php");
+#include("footer.php");
 ?>
