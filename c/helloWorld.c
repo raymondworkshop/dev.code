@@ -1,3 +1,4 @@
+//standard input/output lib
 #include <stdio.h>
 
 main()
