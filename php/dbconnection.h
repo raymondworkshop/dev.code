@@ -6,12 +6,14 @@
 #include <iostream>
 #include <stdlib.h>
 //#include <stdafx.h>
+#include <cstdlib> //for std::system
 
 //mysql
 #include <my_global.h>
 #include <mysql.h>
 
 //string
+//use c++ string lib
 #include <string>
 
 #define BUFFER_SIZE 516
@@ -25,3 +27,9 @@
 */
 
 char* CatStr(char* buffer, char* str1, char* str2);
+
+void DownloadFiles();
+
+void UploadFile(const std::string& subject);
+
+void UpdateData(const std::string&  object,const std::string& suspect, const std::string& subject);

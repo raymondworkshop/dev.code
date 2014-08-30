@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "dbconnection.h"
 
-using namespace std;
+//using namespace std;
 
 char* CatStr(char* buffer, char* str1, char* str2){
 	//char* separator = "; ";
@@ -18,12 +18,36 @@ char* CatStr(char* buffer, char* str1, char* str2){
 	return buffer;
 }
 
-int _tmain(int argc, _TCHAR* argv[])
-{
-	
+void DownloadFiles(){
 	//about php in c++
-    cout<< std::system("php -f autoload.php");
-	
+    std::cout<< std::system("php -f download.php");
+	std::cout<<std::endl;
+}
+
+void UploadFile(std::string& subject){
+	std::string command = "php -f upload.php " + subject;
+	//std::cout<<"php command:" <<command<< std::endl;
+
+	char* php_command = new char[command.length() + 1];
+	strcpy(php_command, command.c_str());
+	printf("[DEBUG]php_command: %s", php_command);
+
+	std::cout<<std::system(php_command);
+
+	delete[] php_command;
+}
+
+/*
+   object  - (eyes, face, finger, iris)
+   suspect - the images in suspectsUpload/eyes/*
+   subject - the images from the camera
+*/
+void UpdateData(std::string& object,std::string& suspect,std::string& subject){
+	 std::cout<<"[DEBUG]object:"<<object <<std::endl;
+	 std::cout<<"[DEBUG]suspect:"<<suspect<<std::endl;
+	 std::cout<<"[DEBUG]subject:"<<subject<<std::endl;
+	//printf("object: %s, suspect:%s, subject:%s:\n", object, suspect, subject);
+
 	//about MYSQL
 	//declare a MYSQL structure
 	MYSQL *conn;
@@ -57,38 +81,52 @@ int _tmain(int argc, _TCHAR* argv[])
 	//char* buffer;
     //calloc allocates the requested memory and returns a pointer to it
 	//buffer = (char*) calloc(BUFFER_SIZE, sizeof(char));
+	std::string dir = object + "Path" ; //eyesPath
+	std::string suspect_image = "'suspectsUpload/" + object + "/" + suspect + "';";  //'suspectsUpload/eyes/138216560533-88011_L_2_Eyelid.bmp';"
+	//"select firstName, lastName, gender, Age from biometData where eyesPath = 'suspectsUpload/eyes/138216560533-88011_L_2_Eyelid.bmp';"
+	std::string sql_matched_remark = "select firstName, lastName, gender, Age from biometData where " + dir + " = "  + suspect_image;
+	//std::cout<<"sql_matched_remark:"<<sql_matched_remark <<std::endl;
 
-	if(mysql_query(conn, "select firstName, lastName, gender, Age from biometData where eyesPath = 'suspectsUpload/eyes/138216560533-88011_L_2_Eyelid.bmp';")){
-		printf("Error %u: %s\n", mysql_errno(conn), mysql_error(conn));
+	//convert string to char*
+	char* cstr_sql_matched_remark = new char[sql_matched_remark.length() + 1];
+	strcpy(cstr_sql_matched_remark, sql_matched_remark.c_str());
+	
+	printf("[DEBUG]cstr_sql_matched_remark: %s\n", cstr_sql_matched_remark);
+	if(mysql_query(conn, cstr_sql_matched_remark)){
+        printf("Error %u: %s\n", mysql_errno(conn), mysql_error(conn));
+
+		delete[] cstr_sql_matched_remark;
         exit(1);
 	} else {
-	    result = mysql_store_result(conn);
+		result = mysql_store_result(conn);
 
 		//retrieve the number of rows and fields
 		num_fields = mysql_num_fields(result);
 		fields = mysql_fetch_field(result);
 
 		//string str;
-		string separator = "; ";
-		string matched_remark;
+		std::string separator = "; ";
+		std::string matched_remark;
 		while((row = mysql_fetch_row(result))){
 		//each row
 			//init the buffer, memset copies the '\0' to the first sizeof * buffer of buffer
 			//memset(buffer, '\0', sizeof * buffer);
-
+			char* str;
 			for(i = 0; i < num_fields; i++){
-			   /*if (i == 0) {
-				   while(fields = mysql_fetch_field(result)){
-				       printf("%s ", fields->name);
+			   /*
+				while(fields = mysql_fetch_field(result)){
+				       printf("%s ", fields[i].name);
 
-				   }
-                   printf("\n");
-				}*/
+				}
+                printf("\n");
+				*/
 
-				//firstName
-				if (fields[i].name == "firstName" ){
-					  string firstname = "FirstName:";
-
+				printf("[DEBUG]Fields: %s",fields[i].name);
+                //firstName
+				str = "firstName";
+				if ( strcmp(str, fields[i].name) == 0 ){
+					  std::string firstname = "FirstName:";
+					  
                       matched_remark = firstname + row[0] + separator;
 					  //strncat(buffer, separator, strlen(separator) + 1);
 					  /*
@@ -103,67 +141,95 @@ int _tmain(int argc, _TCHAR* argv[])
 				}
 
 				//lastname
-				if (fields[i].name == "lastName"){
+				str= "lastName";
+				if (strcmp(str, fields[i].name) == 0){
 					  // printf("lastname: %s\n", fields[i].name);
-                       string lastname = "LastName:";
+                       std::string lastname = "LastName:";
 
 					   matched_remark = matched_remark + lastname + row[1] + separator;
+					   //std::cout<<"matched_remark:"<<matched_remark<<std::endl;
+
 				}
 
 				//gender
-				if (fields[i].name == "gender"){
+				str = "gender";
+				if (strcmp(fields[i].name, str) == 0){
 					  // printf("gender: %s\n", fields[i].name);
-                       string gender = "gender:";
+                       std::string gender = "gender:";
 					   matched_remark = matched_remark + gender + row[2] + separator;
+					   //std::cout<<"matched_remark:"<<matched_remark<<std::endl;
+
 				}
 
 				//Age
-				if (fields[i].name == "Age"){
+				str = "Age";
+				if (strcmp (fields[i].name, str) == 0){
 					  // printf("Age: %s\n", fields[i].name);
-                       string age = "Age:";
+                       std::string age = "Age:";
 					   matched_remark = matched_remark + age + row[3] + separator;
+					   //std::cout<<"matched_remark:"<<matched_remark<<std::endl;
+
 				}
 
 			   }//for
 
-			 string camera_serial = "06";
+			 std::string camera_serial = "06";
 			 matched_remark = matched_remark + "Camera:" + camera_serial + separator;
 
-			 string gate_num = "02";
+
+			 std::string gate_num = "02";
 			 matched_remark = matched_remark + "GateNum:" + gate_num + separator;
 
 			}//while 
 
-        cout<<"matched_remark:"<<matched_remark<<endl;
+        std::cout<<"matched_remark:"<<matched_remark<<std::endl;
 
 		//matched images
-		string basename_image = "138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
-		string matched_dir = "suspectsUpload/matched/";
-		string matched_image = matched_dir + basename_image;
-        cout<<"matched_image:"<<matched_image<<endl;
+		std::string basename_image = subject;
+		//string basename_image = "138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
+		std::string matched_dir = "suspectsUpload/matched/";
+		std::string matched_image = matched_dir + basename_image;
+		//printf("matched_image: %s", matched_image);
+        std::cout<<"[DEBUG]matched_image:"<<matched_image<<std::endl;
 		
 		//marched_score
-		string marched_score = "0.6";
+		std::string marched_score = "0.6";
 
 		//update the db
-		string sql_matched;
+		std::string sql_matched;
 
-		sql_matched = "update eyesMatchResulted e, biometData b set e.matchedScored = " + marched_score + ", e.matchedPath ='" + matched_image + "', e.matchedRemark = '" + matched_remark + "' where e.idbiometData = b.idbiometData and b.eyesPath = 'suspectsUpload/eyes/" + basename_image + " '";
+		sql_matched = "update " + object + "MatchResulted e, biometData b set e.matchedScored = " + marched_score + ", e.matchedPath ='" + matched_image + "', e.matchedRemark = '" + matched_remark + "' where e.idbiometData = b.idbiometData and b." + dir + "= " + suspect_image;
 		//update eyesMatchResulted e, biometData b set e.matchedScored = 0.6, e.matchedPath ='$matched_image', e.matchedRemark = '$matched_remark' where e.idbiometData = b.idbiometData and b.eyesPath = 'suspectsUpload/eyes/$db_image';
-		cout<<"sql_matched:"<<sql_matched<<endl;
+		
+		//std::cout<<"[DEBUG]sql_matched:"<<sql_matched<<std::endl;
 
 		//convert string to char*
-		char* cstr = new char[sql_matched.length() + 1];
-		strcpy(cstr, sql_matched.c_str());
+		char* cstr_sql_matched = new char[sql_matched.length() + 1];
+		strcpy(cstr_sql_matched, sql_matched.c_str());
+		printf("[DEBUG]sql_matched: %s", cstr_sql_matched);
+		//update the data
+		mysql_query(conn,cstr_sql_matched);
 
-		mysql_query(conn,cstr);
+		delete[] cstr_sql_matched;
 
-		delete[] cstr;
-
+		delete[] cstr_sql_matched_remark;
 		//free(buffer);
 	}
 
 	mysql_free_result(result);
 	mysql_close(conn);
 	
+	exit(0);
+
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	std::string object = "eyes";
+	std::string suspect = "138216560533-88011_L_2_Eyelid.bmp";
+	std::string subject = "138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
+	
+	//DownloadFiles();
+	UpdateData(object, suspect, subject);
+	//UploadFile(subject);
 }
