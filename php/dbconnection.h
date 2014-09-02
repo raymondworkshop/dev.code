@@ -14,13 +14,18 @@
 //#include <stdafx.h>
 #include <cstdlib> //for std::system
 
-//mysql
+//mysql c++
+/*
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+#include "mysql_connection.h"
+*/
+
+//mysql c
 #include <my_global.h>
 #include <mysql.h>
-
-//string
-//use c++ string lib
-#include <string>
 
 #define BUFFER_SIZE 516
 #endif
@@ -32,7 +37,7 @@
 #endif
 */
 
-char* CatStr(char* buffer, char* str1, char* str2);
+//char* CatStr(char* buffer, char* str1, char* str2);
 
 /* object  - (eyes, face, finger, iris) */
 void DownloadFiles(const std::string& object);

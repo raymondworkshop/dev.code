@@ -6,8 +6,9 @@
  *    Augustus-2014 Raymond creation
 */
 
-$download_object = $argv[1];
-echo "[DEBUG]download_object: $download_object \n"; 
+#$download_object = $argv[1];
+$object = $argv[1] . "Path";
+echo "\n[DEBUG]download_object: $object \n"; 
 
 //include("SFTPConnection.php");
 include('Net/SFTP.php');
@@ -17,21 +18,21 @@ function dosPath($path){
 }
 
 function makedir($dir){
-     if(file_exists($dir) && is_dir($dir)){
-	 echo "[DEBUG]:dir $dir exists \n";
-    }
-    else {
-	 echo "[DEBUG]:dir $dir not exists \n";
-	 echo "[DEBUG]:mkdir $dir \n";
+    if(file_exists($dir) && is_dir($dir)){
+	     echo "dir $dir exists \n";
+    
+	}else {
+	     echo "dir $dir not exists \n";
+	     echo "[DEBUG]:mkdir $dir \n";
 		 #mkdir the dir	
 		 #NOTICE: realpath function only work if the dir exists
          #$local = realpath("$windows_dir"); 
-	 mkdir($dir);		 
+	     mkdir($dir);		 
    }
 }
 
 //1) download the dataset from the server
-//TODO: add parameters to seperate the functions
+//add parameters to separate the functions
 $sftp = new Net_SFTP('csdoor2.comp.polyu.edu.hk');
 if(!$sftp->login('biomet', 'saospiet')){
    exit('Login Failed');
@@ -65,6 +66,7 @@ makedir($windows_local_dir);
 $windows_local_dir = dosPath("$windows_local_dir");	
 echo "[DEBUG]:windows_local_dir:$windows_local_dir\n";
 
+#The defined array
 $arr = array (
        "eyesPath" => "suspectsUpload/eyes",
 	   "irisPath" => "suspectsUpload/iris",
@@ -72,7 +74,7 @@ $arr = array (
 	   "fingerPath" => "suspectsUpload/finger"
 );
 
-$object = $download_object . "Path";
+#$object = $download_object . "Path";
 
 #foreach ( $arr as $key => $value) {
 if( array_key_exists($object, $arr )) {
@@ -99,10 +101,11 @@ if( array_key_exists($object, $arr )) {
 	
 	#echo "[DEBUG]:key->$key \n" ;
 	#get the related image dir from table biometData
-	$sql_isDownload = "select $object from biometData where isDownload = 0;";
+	$flag = $argv[1] . "Download";
+	$sql_isDownload = "select $object from biometData where $flag = 0;";
     $result = mysql_query($sql_isDownload, $link)
                    or die ('MySQL Error: ' . mysql_error());
-				   
+		
     while($row = mysql_fetch_assoc($result)){
 	     #echo "[DEBUG]: row:$row[$key]\n";
 	     #download each image
@@ -110,7 +113,7 @@ if( array_key_exists($object, $arr )) {
 		     # the related server dir
 			 //echo "[DEBUG]row-key:$row[$key]" ;
 		     $image = "$default_server_dir/$row[$object]";
-             echo "[DEBUG]:images:$image\n" ;
+             //echo "[DEBUG]:images:$image\n" ;
 			 
 			 $img = basename($image);
 			 echo "[DEBUG]:img:$img\n" ;
@@ -118,14 +121,14 @@ if( array_key_exists($object, $arr )) {
 			 $sftp->get($img, $img);
 			 
 			 #update the flag in biometData
-			 # should have four flags ...
-			 $isDownload = "update biometData set isDownload = 1 where eyesPath = '$row[$object]' or irisPath = '$row[$object]' or facePath = '$row[$object]' or fingerPath = '$row[$object]';";
+			 # the four flags ...
+			 $isDownload = "update biometData set $flag = 1 where eyesPath = '$row[$object]' or irisPath = '$row[$object]' or facePath = '$row[$object]' or fingerPath = '$row[$object]';";
              echo "[DEBUG]:isDownload: $isDownload \n";
 			 
              $result_matched = mysql_query($isDownload, $link) 
                      or die ('MySQL Error: ' . mysql_error());
 					 
-             echo "[DEBUG]update a flag to biometData \n";
+             echo "Update the flag to biometData \n";
 		}
      }
 }
@@ -133,4 +136,5 @@ if( array_key_exists($object, $arr )) {
 
 mysql_close($link);
 
+echo "Done \n"; 
 ?>

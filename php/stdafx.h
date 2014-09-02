@@ -10,5 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
-
-// TODO: reference additional headers your program requires here
+// reference additional headers the program requires 
+//string
+//use c++ string lib for the convience
+#include <string>

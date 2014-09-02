@@ -24,6 +24,37 @@ char* CatStr(char* buffer, char* str1, char* str2){
 	// printf("String = %s", buffer);
 	return buffer;
 }
+  
+int GetChar(char s[], int lim)  
+{
+    int c, i;
+
+    for(i = 0; i<lim-1 && (c = getchar()) != EOF && c != '\n'; ++i)
+      s[i] = c;
+
+    if( c == '\n')
+    {
+      s[i] = c;
+      ++i;
+    }
+
+    //'0' represents the null character, whose value is zero;
+    // which marks the end of the string
+    s[i] = '\0'; 
+    
+    return i;
+}
+
+/* Copy: copy 'from' to 'to'; */
+void Copy(char to[], char from[])
+{
+    int i;
+    
+    i = 0;
+    while((to[i] = from[i]) != '\0')
+      ++i;
+    
+}
 
 void DownloadFiles(std::string& object){
 	std::string command = "php -f download.php " + object;
@@ -239,13 +270,14 @@ void UpdateData(std::string& object,std::string& suspect,std::string& subject, s
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	//to test
 	std::string object = "eyes";
 	std::string suspect = "138216560533-88011_L_2_Eyelid.bmp";
 	std::string subject = "138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
 	std::string camera = "06";
 	std::string gate = "02";
 
-	//DownloadFiles(object);
+	DownloadFiles(object);
 	//UpdateData(object, suspect, subject, camera, gate);
-	UploadFile(subject);
+	//UploadFile(subject);
 }
