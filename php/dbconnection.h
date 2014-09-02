@@ -1,4 +1,10 @@
 //db_connection.h
+/*
+ * @author Raymond
+ *
+ * History:
+ *    Augustus-2014 Raymond creation
+ */
 #ifndef DB_CONNECTION_H
 #define DB_CONNECTION_H
 
@@ -28,8 +34,14 @@
 
 char* CatStr(char* buffer, char* str1, char* str2);
 
-void DownloadFiles();
+/* object  - (eyes, face, finger, iris) */
+void DownloadFiles(const std::string& object);
 
 void UploadFile(const std::string& subject);
 
-void UpdateData(const std::string&  object,const std::string& suspect, const std::string& subject);
+/*
+   object  - (eyes, face, finger, iris)
+   suspect - the images in suspectsUpload/eyes/*
+   subject - the images from the camera
+*/
+void UpdateData(const std::string&  object,const std::string& suspect, const std::string& subject, const std::string& camera, const std::string& gate);

@@ -1,4 +1,11 @@
 <?php
+/*
+ * @author Raymond
+ *
+ * History:
+ *    Augustus-2014 Raymond creation
+*/
+
 $basename_image = $argv[1];
 echo "[DEBUG]basename_image: $basename_image \n"; 
 
@@ -8,7 +15,6 @@ include('Net/SFTP.php');
 function dosPath($path){
      return str_replace('/', '\\',$path);
 }
-
 
 //1) connect the server
 $sftp = new Net_SFTP('csdoor2.comp.polyu.edu.hk');
@@ -38,7 +44,7 @@ $windows_local_dir = "/biomet/matched/";
 #echo "[DEBUG]windows_dir: $windows_dir \n";
 #echo "[DEBUG]base_image: $basename_image \n";
 $real_local_dir = $windows_local_dir . $basename_image;
-#echo "[DEBUG]real_local_dir: $real_local_dir \n"; 
+echo "[DEBUG]real_local_dir: $real_local_dir \n"; 
 $image_dir = realpath($real_local_dir) ;
 echo "[DEBUG]image_dir: $image_dir \n"; 
 //$image_contents = file_get_contents("c:\php\autoload\matched\138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg");

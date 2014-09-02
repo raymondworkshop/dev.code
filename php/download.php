@@ -1,4 +1,13 @@
 <?php
+/*
+ * @author Raymond
+ *
+ * History:
+ *    Augustus-2014 Raymond creation
+*/
+
+$download_object = $argv[1];
+echo "[DEBUG]download_object: $download_object \n"; 
 
 //include("SFTPConnection.php");
 include('Net/SFTP.php');
@@ -6,7 +15,6 @@ include('Net/SFTP.php');
 function dosPath($path){
      return str_replace('/', '\\',$path);
 }
-
 
 function makedir($dir){
      if(file_exists($dir) && is_dir($dir)){
@@ -58,19 +66,22 @@ $windows_local_dir = dosPath("$windows_local_dir");
 echo "[DEBUG]:windows_local_dir:$windows_local_dir\n";
 
 $arr = array (
-       "eyesPath" => "suspectsUpload/eyes"
-	   #"irisPath" => "suspectsUpload/iris",
-	  #"facePath" => "suspectsUpload/face",
-	  # "fingerPath" => "suspectsUpload/finger"
+       "eyesPath" => "suspectsUpload/eyes",
+	   "irisPath" => "suspectsUpload/iris",
+	   "facePath" => "suspectsUpload/face",
+	   "fingerPath" => "suspectsUpload/finger"
 );
 
-foreach ( $arr as $key => $value) {
+$object = $download_object . "Path";
+
+#foreach ( $arr as $key => $value) {
+if( array_key_exists($object, $arr )) {
     #For eyes, iris, face, finger
-    echo "[DEBUG]:$key => $value\n";
+    echo "[DEBUG]:$object => $arr[$object]\n";
 	
 	#mkdir a related local dir if it doesnot exist	
-	$local_dir = $default_local_dir . $key ;
-	#dosPath("$default_local_dir/$key");	
+	$local_dir = $default_local_dir . $object ;
+	#dosPath("$default_local_dir/$object");	
 	echo "[DEBUG]:local_dir:$local_dir\n";
 	makedir($local_dir);
 	
@@ -79,7 +90,7 @@ foreach ( $arr as $key => $value) {
 	chdir($local_dir);
 	#on the server, switch to the related defined dir
 	#/home/biomet/public_html/project/suspectsUpload/eyes
-	$server_dir = "$default_server_dir/$value";
+	$server_dir = "$default_server_dir/$arr[$object]";
 	$sftp->chdir($server_dir);
 	
 	#list the images in the dir in the server
@@ -88,17 +99,17 @@ foreach ( $arr as $key => $value) {
 	
 	#echo "[DEBUG]:key->$key \n" ;
 	#get the related image dir from table biometData
-	$sql_isDownload = "select $key from biometData where isDownload = 0;";
+	$sql_isDownload = "select $object from biometData where isDownload = 0;";
     $result = mysql_query($sql_isDownload, $link)
                    or die ('MySQL Error: ' . mysql_error());
 				   
     while($row = mysql_fetch_assoc($result)){
 	     #echo "[DEBUG]: row:$row[$key]\n";
 	     #download each image
-	     if (strlen($row[$key])>0) {
+	     if (strlen($row[$object])>0) {
 		     # the related server dir
 			 //echo "[DEBUG]row-key:$row[$key]" ;
-		     $image = "$default_server_dir/$row[$key]";
+		     $image = "$default_server_dir/$row[$object]";
              echo "[DEBUG]:images:$image\n" ;
 			 
 			 $img = basename($image);
@@ -108,7 +119,7 @@ foreach ( $arr as $key => $value) {
 			 
 			 #update the flag in biometData
 			 # should have four flags ...
-			 $isDownload = "update biometData set isDownload = 1 where eyesPath = '$row[$key]' or irisPath = '$row[$key]' or facePath = '$row[$key]' or fingerPath = '$row[$key]';";
+			 $isDownload = "update biometData set isDownload = 1 where eyesPath = '$row[$object]' or irisPath = '$row[$object]' or facePath = '$row[$object]' or fingerPath = '$row[$object]';";
              echo "[DEBUG]:isDownload: $isDownload \n";
 			 
              $result_matched = mysql_query($isDownload, $link) 
@@ -116,8 +127,9 @@ foreach ( $arr as $key => $value) {
 					 
              echo "[DEBUG]update a flag to biometData \n";
 		}
-    }
+     }
 }
+#}
 
 mysql_close($link);
 

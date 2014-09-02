@@ -4,6 +4,13 @@
 
 //using namespace std;
 
+/*
+ * @author Raymond
+ *
+ * History:
+ *    Augustus-2014 Raymond creation
+ */
+
 char* CatStr(char* buffer, char* str1, char* str2){
 	//char* separator = "; ";
 
@@ -18,10 +25,17 @@ char* CatStr(char* buffer, char* str1, char* str2){
 	return buffer;
 }
 
-void DownloadFiles(){
+void DownloadFiles(std::string& object){
+	std::string command = "php -f download.php " + object;
+
+	char* php_command = new char[command.length() + 1];
+	strcpy(php_command, command.c_str());
+	printf("[DEBUG]php_command: %s", php_command);
+
 	//about php in c++
-    std::cout<< std::system("php -f download.php");
-	std::cout<<std::endl;
+    std::cout<<std::system(php_command);
+
+	delete[] php_command;
 }
 
 void UploadFile(std::string& subject){
@@ -42,7 +56,7 @@ void UploadFile(std::string& subject){
    suspect - the images in suspectsUpload/eyes/*
    subject - the images from the camera
 */
-void UpdateData(std::string& object,std::string& suspect,std::string& subject){
+void UpdateData(std::string& object,std::string& suspect,std::string& subject, std::string& camera, std::string& gate){
 	 std::cout<<"[DEBUG]object:"<<object <<std::endl;
 	 std::cout<<"[DEBUG]suspect:"<<suspect<<std::endl;
 	 std::cout<<"[DEBUG]subject:"<<subject<<std::endl;
@@ -173,12 +187,12 @@ void UpdateData(std::string& object,std::string& suspect,std::string& subject){
 
 			   }//for
 
-			 std::string camera_serial = "06";
-			 matched_remark = matched_remark + "Camera:" + camera_serial + separator;
+			 //std::string camera_serial = "06";
+			 matched_remark = matched_remark + "Camera:" + camera + separator;
 
 
-			 std::string gate_num = "02";
-			 matched_remark = matched_remark + "GateNum:" + gate_num + separator;
+			 //std::string gate_num = "02";
+			 matched_remark = matched_remark + "GateNum:" + gate + separator;
 
 			}//while 
 
@@ -228,8 +242,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	std::string object = "eyes";
 	std::string suspect = "138216560533-88011_L_2_Eyelid.bmp";
 	std::string subject = "138156374231-113AD-080GE__1_00-0C-DF-04-A2-2D2222_F4_L4.jpg";
-	
-	//DownloadFiles();
-	UpdateData(object, suspect, subject);
-	//UploadFile(subject);
+	std::string camera = "06";
+	std::string gate = "02";
+
+	//DownloadFiles(object);
+	//UpdateData(object, suspect, subject, camera, gate);
+	UploadFile(subject);
 }
