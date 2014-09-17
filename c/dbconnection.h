@@ -24,7 +24,7 @@
 */
 
 //mysql c
-#include <my_global.h>
+//#include <my_global.h>
 #include <mysql.h>
 
 #define BUFFER_SIZE 516
