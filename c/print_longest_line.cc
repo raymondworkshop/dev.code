@@ -4,7 +4,7 @@
 
 //3) extern variable: 
 // relying too heavily on extern variables is fraught with peril
-//since it leads to programswhose data connections are not at all obvious - variables can be changed in unexpected and even inadvertent ways
+//since it leads to programs whose data connections are not at all obvious - variables can be changed in unexpected and even inadvertent ways
 
 /*2) The purpose of supplying the size of an array, max_line here, in a declaration is to set aside storage */
 int GetLine(char line[], int max_line);
@@ -20,6 +20,7 @@ main()
   char longest[MAXLINE];  //longest line saved here
   
   max_length = 0;
+  
   while( (current_length = GetLine(line, MAXLINE)) > 0)
     if(current_length > max_length)
     {
