@@ -1,14 +1,14 @@
-<?php
+﻿<?php
 include("common.php");
 include("header.php");
 #$id  = 0;
 
- function imageDataPath($path,$type)
+ function imageDataPath($path,$type,$first_name, $last_name)
 {
 	$allowedExts = array("gif", "jpeg", "jpg", "png","pjpeg","x-png","bmp","tiff");
 	$temp = explode(".", $_FILES[$path]["name"]);
 	$extension = end($temp);
-	
+	//echo "type: " . $_FILES[$path]["type"] . "\n";
  if ((($_FILES[$path]["type"] == "image/gif")
  || ($_FILES[$path]["type"] == "image/jpeg")
  || ($_FILES[$path]["type"] == "image/jpg")
@@ -19,23 +19,29 @@ include("header.php");
  || ($_FILES[$path]["type"] == "image/tiff"))
  && in_array($extension, $allowedExts))
    {
-   if ($_FILES[$path]["error"] > 0)
-     {
-     echo "Error: " . $_FILES[$path]["error"] . "<br>";
-     }
-   else
-     {
-		$location="suspectsUpload/".$type."/";		
+    if ($_FILES[$path]["error"] > 0)
+      {
+      echo "Error: " . $_FILES[$path]["error"] . "<br>";
+      }
+    else
+      {
+		//$location="suspectsUpload/".$type."/".$id_num."/";	
+        $location="suspectsUpload/".$type."/";		
 		//$id = time()."".rand(99,20);
-		$imagePath = str_replace("'","''",$_FILES[$path]['name']);
+		$imagePath = str_replace("'","''",$first_name."-".$last_name."_".rand(900,100)."-".$_FILES[$path]['name']);
 		$imagePath = str_replace("#","_",$imagePath);
+		
+		//makedir($location);
 
 		copy($_FILES[$path]['tmp_name'],$location.$imagePath);
 		$imagePath=$location.$imagePath;
+		
+		//makedir($location);
      }
    }
  else
    {
+     echo "wenlong";
  //  echo "Invalid file";
    }
 
@@ -57,6 +63,20 @@ function colValue($str){
 	 return $string;
 }	
 
+function makedir($dir){
+    if(file_exists($dir) && is_dir($dir)){
+	     echo "dir $dir exists \n";
+    
+	}else {
+	     echo "dir $dir not exists \n";
+	     echo "[DEBUG]:mkdir $dir \n";
+		 #mkdir the dir	
+		 #NOTICE: realpath function only work if the dir exists
+         #$local = realpath("$windows_dir"); 
+	     mkdir($dir, 0777);		 
+   }
+}
+
 /*
 	$message = (isset($_SESSION["message"]) ? $_SESSION["message"] : "");	
 		if ($message != ""){
@@ -67,6 +87,7 @@ $firstname = $_POST["firstname"];
 $lastname = $_POST["lastname"];
 $gender = $_POST["gender"];
 $age = $_POST["age"];
+$idnum = $_POST["id"];
 $facePath=$_POST["facePath"];
 $fingerPath=$_POST["fingerPath"];
 
@@ -83,7 +104,7 @@ if(!((strlen($_FILES["facePath"]["name"])>0)
 if ($firstname == "")
 	$message .= "firstname cannot be empty<br>";
 if ($gender == "")
-	$message .= "Gender cannot be empty,zhao<br>";
+	$message .= "Gender cannot be empty<br>";
 if ($lastname == "")
 	$message .= "lastname cannot be empty<br>";
 	
@@ -96,25 +117,28 @@ if  ($message != "")
 }
 else
 {
-	
+	//echo "type: " . $_FILES["facePath"]["type"] . "\n";
+	//echo "name: " . $_FILES["facePath"]["name"] . "\n";
+	//echo "tmp_name: " . $_FILES["facePath"]["tmp_name"] . "\n";
 	if(strlen($_FILES["facePath"]["name"])>0)
 	{
-	$facePath=imageDataPath("facePath","face");
+	$facePath=imageDataPath("facePath","face",$firstname, $lastname);
+	//echo "facePath:$facePath\n";
 	}
 	
 	if(strlen($_FILES["fingerPath"]["name"])>0)
 	{
-	$fingerPath=imageDataPath("fingerPath","finger");
+	$fingerPath=imageDataPath("fingerPath","finger",$firstname, $lastname);
 	}
 	
 	if(strlen($_FILES["irisPath"]["name"])>0)
 	{
-	$irisPath=imageDataPath("irisPath","iris");
+	$irisPath=imageDataPath("irisPath","iris",$firstname, $lastname);
 	}
 
 	if(strlen($_FILES["eyesPath"]["name"])>0)
 	{
-	$eyesPath=imageDataPath("eyesPath","eyes");
+	$eyesPath=imageDataPath("eyesPath","eyes",$firstname, $lastname);
 	}
 
 	$clientIP=$_SERVER['REMOTE_ADDR'];
@@ -132,107 +156,107 @@ else
           echo 'Could not select database';
          exit;
      }
-     #echo "$firstname $lastname\n";
-     $query_sql = "select firstName,lastName from biometData where firstName = '$firstname' and lastName= '$lastname';";
-     $query_result = mysql_query($query_sql, $link)
-                or die ('MySQL Error: ' . mysql_error());
+     // echo "$firstname $lastname\n"; //input name not the login name
+     // $query_sql = "select firstName,lastName from biometData where firstName = '$firstname' and lastName= '$lastname';";
+     // $query_result = mysql_query($query_sql, $link)
+                // or die ('MySQL Error: ' . mysql_error());
 	
-	 while($row = mysql_fetch_assoc($query_result)){
-	     $first_name = $row['firstName'];
-		 $last_name = $row['lastName'];
-     }	 
-	mysql_free_result($query_result);
+	 // while($row = mysql_fetch_assoc($query_result)){
+	     // $first_name = $row['firstName'];
+		 // $last_name = $row['lastName'];
+     // }	 
+	// mysql_free_result($query_result);
 	
-    if(strlen($first_name)>0 and strlen($last_name)>0) {
-	    #echo "Replication Suspects Name";
-	 #if name replication
-	  		 echo "</table>"; 
-		     echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
-		     echo "<tr><td class='content'><font color='red'>Suspect Name Replication. Please choose the Candidates</font></td></tr>";
-		     #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
-		     #echo "</table>";
+    // if(strlen($first_name)>0 and strlen($last_name)>0) {
+	    // #echo "Replication Suspects Name";
+	 // #if name replication
+	  		 // echo "</table>"; 
+		     // echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
+		     // echo "<tr><td class='content'><font color='red'>Suspect Name Replication. Please choose the Candidates</font></td></tr>";
+		     // #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
+		     // #echo "</table>";
 	     
-		     #echo "</table>"; 
-		     #echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
-		     echo "<tr><td class='content'>Return to <a href='suspectsData.php'>Update Suspects Data</a> page.</td></tr>";
-		     #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
-		     echo "</table>";
+		     // #echo "</table>"; 
+		     // #echo "<table width='960' border='0' align='center' cellpadding='0' cellspacing='0'>";
+		     // echo "<tr><td class='content'>Return to <a href='suspectsData.php'>Update Suspects Data</a> page.</td></tr>";
+		     // #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
+		     // echo "</table>";
 	
-	         echo "<table width='960' border='1' align='center' cellpadding='0' cellspacing='0' class='bgColor' >";
-		     echo "<tr>";
-		     echo "<th class='heading'>Choice</th>";
-			 echo "<th class='heading'></th>";
-		     echo "<th class='heading' style='color:blue;'>Replicated Suspects</th>";
+	         // echo "<table width='960' border='1' align='center' cellpadding='0' cellspacing='0' class='bgColor' >";
+		     // echo "<tr>";
+		     // echo "<th class='heading'>Choice</th>";
+			 // echo "<th class='heading'></th>";
+		     // echo "<th class='heading' style='color:blue;'>Replicated Suspects</th>";
 		     
-		     #echo "<th class='heading'>Replicated Subject</th>";
-		     echo "<th class='heading'>Details</th>";
-		     echo "</tr>";
+		     // #echo "<th class='heading'>Replicated Subject</th>";
+		     // echo "<th class='heading'>Details</th>";
+		     // echo "</tr>";
 		
-         $query_sql = "select idbiometData, firstName,lastName,eyesPath,facePath,fingerPath,irisPath,clientIp,gender, Age from biometData where firstName = '$firstname' and lastName= '$lastname';";
-         $query_result = mysql_query($query_sql, $link)
-                or die ('MySQL Error: ' . mysql_error());		
-        while($row = mysql_fetch_assoc($query_result)){				
+         // $query_sql = "select idbiometData, firstName,lastName,eyesPath,facePath,fingerPath,irisPath,clientIp,gender, Age from biometData where firstName = '$firstname' and lastName= '$lastname';";
+         // $query_result = mysql_query($query_sql, $link)
+                // or die ('MySQL Error: ' . mysql_error());		
+        // while($row = mysql_fetch_assoc($query_result)){				
 
-	         #$eyes_path = $row['eyesPath'];
-	         #echo "Name: $first_name  $last_name \n";
+	         // #$eyes_path = $row['eyesPath'];
+	         // #echo "Name: $first_name  $last_name \n";
     
-	         echo "<tr><td colspan='4' class='content'><p align=\"left\">Suspects Name:<b>". $row['lastName'] ." ".$row['firstName']." Uploader Ip(".$row['clientIp'].")</b></a></p></td></tr>";
+	         // echo "<tr><td colspan='4' class='content'><p align=\"left\">Suspects Name:<b>". $row['lastName'] ." ".$row['firstName']." Uploader Ip(".$row['clientIp'].")</b></a></p></td></tr>";
 			   
-			if(strlen($row['eyesPath'])>0){
-			    $id = $row['idbiometData'];
-			    echo "<tr>";
-			    #echo "<td><form action='suspectsChoice_submit.php' method = 'post'>
-				echo "<td> <form action='suspectsChoice_submit.php' method = 'post'><rowspan='2'> 
-				<input type = 'radio' name='choice' value='Yes' />Yes
-                <input type = 'radio' name='choice' value='No' checked />No
+			// if(strlen($row['eyesPath'])>0){
+			    // $id = $row['idbiometData'];
+			    // echo "<tr>";
+			    // #echo "<td><form action='suspectsChoice_submit.php' method = 'post'>
+				// echo "<td> <form action='suspectsChoice_submit.php' method = 'post'><rowspan='2'> 
+				// <input type = 'radio' name='choice' value='Yes' />Yes
+                // <input type = 'radio' name='choice' value='No' checked />No
 				
-                <input type='submit' name='submit' value='Submit' /> 				
-				</form></td>";
+                // <input type='submit' name='submit' value='Submit' /> 				
+				// </form></td>";
 				
-				echo "<td class='content'><b><div align=center>Eye : </div></b></td>";
-				echo "<td><div align=center><img src=\"". $row['eyesPath']."\" width=\"200\" ></div></td>" ;		
-				#$arr = explode(";", $row['eyesMatchedRemark']);
-				# $details = colValue($arr);
-				 $separate = "; ";
-				 $first_name =  $row['firstName'];
-	             $last_name =  $row['lastName'];
-				 $name = "FirstName:" . $first_name . $separate ."LastName: " . $last_name ;
-				 $age = $row['Age'];
-				 $gender = $row['gender'];
-				 $other = $name . $separate .  "Age:" . $first_name . $separate ."Gender: " . $last_name ;
-				 $arr = explode(";", $other);
-				 #$detail = $name . $separate . $other;
-				 #$details = "no data";
+				// echo "<td class='content'><b><div align=center>Eye : </div></b></td>";
+				// echo "<td><div align=center><img src=\"". $row['eyesPath']."\" width=\"200\" ></div></td>" ;		
+				// #$arr = explode(";", $row['eyesMatchedRemark']);
+				// # $details = colValue($arr);
+				 // $separate = "; ";
+				 // $first_name =  $row['firstName'];
+	             // $last_name =  $row['lastName'];
+				 // $name = "FirstName:" . $first_name . $separate ."LastName: " . $last_name ;
+				 // $age = $row['Age'];
+				 // $gender = $row['gender'];
+				 // $other = $name . $separate .  "Age:" . $age . $separate ."Gender: " . $gender ;
+				 // $arr = explode(";", $other);
+				 // #$detail = $name . $separate . $other;
+				 // #$details = "no data";
 				 
-				 	            #for($i=0; $i<count($arr); $i++){
-	            #echo "$arr[$i]\n";
-		        #     $field = explode(":", $arr[$i]);
+				 	            // #for($i=0; $i<count($arr); $i++){
+	            // #echo "$arr[$i]\n";
+		        // #     $field = explode(":", $arr[$i]);
 		 
-		             #echo "$field[0]=> $field[1]\n";
-				#	 $details = $details . "$field[0]:" . "<font color='red'>$field[1]</font>";
-                # }
+		             // #echo "$field[0]=> $field[1]\n";
+				// #	 $details = $details . "$field[0]:" . "<font color='red'>$field[1]</font>";
+                // # }
 				 
-				 $details = colValue($arr);
-				 echo "<td class='content'><div align=center>".$details."</div></td></tr>";			   
-			}
+				 // $details = colValue($arr);
+				 // echo "<td class='content'><div align=center>".$details."</div></td></tr>";			   
+			// }
 		
 		
-		# echo "</table>";
-		#echo "<br>";
-		#echo "<table width='780' border='0' align='center' cellpadding='0' cellspacing='0'>";
-		#echo "<tr><td  class='content'><p align=\"left\">Copyright © 2013 Department of Computing, The Hong Kong Polytechnic University. All rights reserved.  </p></td></tr>";
-		#echo "</table>";	
-		#echo "<br>";		
+		// # echo "</table>";
+		// #echo "<br>";
+		// #echo "<table width='780' border='0' align='center' cellpadding='0' cellspacing='0'>";
+		// #echo "<tr><td  class='content'><p align=\"left\">Copyright © 2013 Department of Computing, The Hong Kong Polytechnic University. All rights reserved.  </p></td></tr>";
+		// #echo "</table>";	
+		// #echo "<br>";		
 
-        }
+        // }
 		
-		mysql_free_result($query_result);
-	}
-  else {
+		// mysql_free_result($query_result);
+	// }
+  //else {
 
 	    #$link = mysql_connect('mysql.comp.polyu.edu.hk', 'biomet', 'qwkdjmxn');
 	    #mysql_select_db("biomet");
-	    $sql = "insert into biometData (firstname, lastname, gender, Age, facePath, fingerPath, irisPath, eyesPath,userName,clientIp) values ('$firstname', '$lastname', '$gender', '$age', '$facePath', '$fingerPath', '$irisPath', '$eyesPath','$userName','$clientIP');";
+	    $sql = "insert into biometData (firstname, lastname, gender, Age, facePath, fingerPath, irisPath, eyesPath,userName,clientIp, id) values ('$firstname', '$lastname', '$gender', '$age', '$facePath', '$fingerPath', '$irisPath', '$eyesPath','$userName','$clientIP', '$idnum');";
 	    $result = mysql_query($sql, $link);
 
 	    if (!$result) {
@@ -314,11 +338,9 @@ else
 		     echo "<tr><td class='content'>Return to <a href='suspectsData.php'>Update Suspects Data</a> page.</td></tr>";
 		     #echo "<tr><td  height='30' bgcolor='#C82435' class='content' ></td></tr>";
 	         echo "</table>";
-	}
+	//}
 }
 ?>
-
-
 
 <?php
 #include("footer.php");
