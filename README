@@ -39,12 +39,18 @@ c++:
 27) BookRecorded.cpp is vector and string exercise
 28) AssociativeContainer.cpp is about associative container review 
 
+c:
+1) The code exercise based on the book "The C Proramming Language" by Brian Kernighan and Dennis Ritchie
+
 java:
 1)budgetrecord/ is a simple diary function, min project in app dev course in cuhk
 2)speech_and_locationFinder/ is a basic Android version of Siri based on google's natural language API, goolge map and Android framework
 
 matlab:
 1)speech recognition project in AI course
+
+php:
+1) This is a web user register/login/active project
 
 scripts:
 1) subsCounter.pl compute numbers of subscriber, which was done in Alcatel-Lucent  **
