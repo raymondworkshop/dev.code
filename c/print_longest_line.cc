@@ -7,8 +7,8 @@
 //since it leads to programs whose data connections are not at all obvious - variables can be changed in unexpected and even inadvertent ways
 
 /*2) The purpose of supplying the size of an array, max_line here, in a declaration is to set aside storage */
-int getline(char line[], int max_line);
-void copy(char to[], char from[]);
+int GetLine(char line[], int max_line);
+void Copy(char to[], char from[]);
 
 /*print longest input line */
 main()
@@ -21,7 +21,7 @@ main()
   
   max_length = 0;
   
-  while( (current_length = getline(line, MAXLINE)) > 0)
+  while( (current_length = GetLine(line, MAXLINE)) > 0)
     if(current_length > max_length)
     {
       max_length = current_length;
@@ -36,12 +36,12 @@ main()
 
 }
 
-/*getline: read line into s, return length*/
+/*GetLine: read line into s, return length*/
 //1) In c, all function arguments are passed by value, which means
 // the called function cannot directly alter a variable in the calling function;
 //it can only alter its private, temporary copy;
 //This is an asset, because parameters can be treated as conveniently initialized local variables in the called routine
-int getline(char s[], int lim)  
+int GetLine(char s[], int lim)  
 {
     int c, i;
 
@@ -62,8 +62,8 @@ int getline(char s[], int lim)
     
   }
 
-/* copy: copy 'from' to 'to'; assume 'to' is big enough*/
-void copy(char to[], char from[])
+/* Copy: copy 'from' to 'to'; assume 'to' is big enough*/
+void Copy(char to[], char from[])
 {
     int i;
     

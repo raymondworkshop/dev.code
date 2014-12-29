@@ -5,7 +5,7 @@
 
 //function declarations and definitins match, this make it possible for a compiler to detect many more errors than it could before
 
-int getline(char line[], int max);             /* get line into s, return length */
+int GetLine(char line[], int max);             /* get line into s, return length */
 int strindex(char source[], char searchfor[]); /* return index of t in s, -1 if none */
 
 char pattern[] = "ould";  /* pattern to search for */
@@ -15,7 +15,7 @@ int main()
   char line[MAXLINE];
   int found = 0;
   
-  while( getline(line, MAXLINE) > 0 )
+  while( GetLine(line, MAXLINE) > 0 )
   {
     if(strindex(line, pattern) >= 0 )
     {
