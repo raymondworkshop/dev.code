@@ -52,9 +52,10 @@ double atof(char s[])
     
 }
 
+/*
 main()
 {
   printf("%f\n", atof("123.123e-6"));
   
 }
-
+*/
