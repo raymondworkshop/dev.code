@@ -41,7 +41,7 @@ main()
 // the called function cannot directly alter a variable in the calling function;
 //it can only alter its private, temporary copy;
 //This is an asset, because parameters can be treated as conveniently initialized local variables in the called routine
-int GetLine(char s[], int lim)  
+int getline(char s[], int lim)  
 {
     int c, i;
 
