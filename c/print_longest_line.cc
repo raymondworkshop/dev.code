@@ -7,7 +7,7 @@
 //since it leads to programs whose data connections are not at all obvious - variables can be changed in unexpected and even inadvertent ways
 
 /*2) The purpose of supplying the size of an array, max_line here, in a declaration is to set aside storage */
-int GetLine(char line[], int max_line);
+int getline(char line[], int max_line);
 void Copy(char to[], char from[]);
 
 /*print longest input line */
