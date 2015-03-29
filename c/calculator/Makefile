@@ -1,6 +1,6 @@
 #This is the Makefile of calc
 CC = gcc
-CFLAGS = -DDEBUG -c
+CFLAGS ="-g" -DDEBUG -c
 LIBS = -lncurses
 # include the head file in the dir
 INCLUDE = -I./include
