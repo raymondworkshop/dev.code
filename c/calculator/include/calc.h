@@ -13,6 +13,7 @@
   it needs for its job and the practical reality that it is harder to maintain more header files.
 
   it is probably best to have one header file that contains everything that is to be shared between any two parts of the program.
+
  */
 
 #define NUMBER '0' /* shared between the two parts of the program */
