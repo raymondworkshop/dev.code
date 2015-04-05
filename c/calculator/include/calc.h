@@ -1,4 +1,6 @@
 //calc.h
+#ifndef CALC
+#define CALC
 /*
   1. The definitions and declarations shared among the files.
   We wanna to centralized as much as possible so that there is only one copy to get right
@@ -20,3 +22,4 @@ int getop(char []);
 int getch(void);
 void ungetch(int);
 
+#endif
