@@ -2,7 +2,6 @@
 /*
   separe the functions into several source files
   because they would come from a separately-compiled lib in a realistic program.
-
   The source of the program may be kept in several files, and previously compiled routines
   may be loaded from libraries.
   
@@ -33,7 +32,7 @@ main()
   double op2;
   char s[MAXOP];
 
-  while( (type = getop(s)) != EOF)
+  while((type = getop(s)) != EOF)
   {
     switch(type){
     case NUMBER:
@@ -76,4 +75,3 @@ main()
   return 0;
     
 }
-

@@ -20,7 +20,7 @@
   If a function is declared static, its name is invisible outside of the file in which it is declared.
  */
 
-/* The static shared buffer and the index */
+/* The static shared buffer and the index, thus provides a way to hide names like buf and bufp */
 static char buf[BUFSIZE];  /* buffer for ungetch */
 static int bufp = 0;       /* next free position in buf */
 
