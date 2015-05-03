@@ -2,7 +2,7 @@
 //get line into s, return length
 #include <stdio.h>
 
-int GetLine(char s[], int lim)  /* lim is the input line length*/
+int _getline(char s[], int lim)  /* lim is the input line length*/
 {
   int c, i;
 
