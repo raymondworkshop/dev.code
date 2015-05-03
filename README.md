@@ -7,7 +7,7 @@ FEATURES:
 python:  
 1) Class.py is an oop syntax exercise  
 2) Class1.py is an oop instance  
-3) ** Inheritance.py is an Inheritance exercise  **
+3) ** Inheritance.py is an Inheritance exercise  **  
 4) ** LinkedList.py is the linked list  **  
 
 c++:  
@@ -33,7 +33,7 @@ c++:
 20) Erase.cpp reviews the erase function in STL  
 21) ConstPointers.cpp reviews the pointer to const and const pointer  
 22) ConstMember.cpp reviews Const function in Class  
-23) ** Class.cpp reviews the class syntax in c++, including constructor initializer, default constructor, friend function, copy constructor and destructor  **
+23) ** Class.cpp reviews the class syntax in c++, including constructor initializer, default constructor, friend function, copy constructor and destructor  **  
 24) ** Class1.cpp is a good example to understand default constructor, copy constructor, destructor  **  
 25) ** Class2.cpp reviews pointer members in c++   **  
 26) ** Class3.cpp includes virtual and protected member in class, dynamic binding,public, private and protected inheritance, derived to base conversions, derived constructors and copy control , copy constructors concept   **  
@@ -54,5 +54,4 @@ others:
 3) localService.lua displays all users's location based on users' location on screen, based on Corona middle layer in Mobile APP course in CUHK  
 
 4)budgetrecord/ is a simple diary function, min project in app dev course in cuhk  
-5)speech_and_locationFinder/ is a basic Android version of Siri based on google's natural language API, goolge map and
-Android framework  
+5)speech_and_locationFinder/ is a basic Android version of Siri based on google's natural language API, goolge map and Android framework  
