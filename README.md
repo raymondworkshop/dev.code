@@ -1,5 +1,5 @@
-DESCRIPTION:
-some code exercises
+DESCRIPTION:  
+some code exercises  
 
 FEATURES:  
 ---------------------
