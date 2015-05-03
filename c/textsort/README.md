@@ -1,2 +1,2 @@
-sort a set of text lines into alphabetic order
-    * pointer array practice [ch5.6]
+ sort a set of text lines into alphabetic order 
+  - the pointer array practice [ch5.6]
