@@ -39,6 +39,6 @@ struct key keytab[] =
 //#define BUFSIZE 100 // buffer for ungetch
 
 int getword(char*, int);
-int binsearch(char*, struct key *, int);
+struct key *binsearch(char*, struct key *, int);
 
 #endif

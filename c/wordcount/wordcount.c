@@ -43,23 +43,23 @@ struct key keytab[] =
 
 int main()
 {
-  int n;
+  struct key *p; // pointer to array structure
   char word[MAXWORD];
 
   while(getword(word, MAXWORD) != EOF) // getword() fetches the next "word" from the input
   {
     if(isalpha(word[0])){
-      if((n = binsearch(word, keytab, NKEYS)) >= 0) //each word is looked up in keytab with binsearch
+      if((p = binsearch(word, keytab, NKEYS)) != NULL) //each word is looked up in keytab with binsearch
       {
-        keytab[n].count++;
+        p->count++;
       }
     }
   }
   
-  for(n = 0; n < NKEYS; n++)
+  for(p = keytab; p < keytab + NKEYS; p++)
   {
-    if(keytab[n].count > 0)
-      printf("%4d %s\n", keytab[n].count, keytab[n].word);
+    if(p->count > 0)
+      printf("%4d %s\n", p->count, p->word);
   }
 
   return 0;
