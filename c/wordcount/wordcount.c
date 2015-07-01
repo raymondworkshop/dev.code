@@ -1,4 +1,5 @@
-//a program to count the occurrences of each C keyword
+//count the occurrences of each C keyword
+//
 // present the arrays of structure
 //
 
@@ -14,7 +15,7 @@ struct key {
   char* word;
   int count;
 };
-*/
+
 
 //1. define an array keytab of structures
 struct key keytab[] =
@@ -30,6 +31,8 @@ struct key keytab[] =
     "void", 0,
     "while",0
   };
+*/
+
 
 #define MAXWORD 100
 
@@ -43,25 +46,30 @@ struct key keytab[] =
 
 int main()
 {
-  struct key *p; // pointer to array structure
+  struct tnode *root; // pointer to array structure
   char word[MAXWORD];
 
+  root = NULL;
   while(getword(word, MAXWORD) != EOF) // getword() fetches the next "word" from the input
   {
     if(isalpha(word[0])){
+      /*
       if((p = binsearch(word, keytab, NKEYS)) != NULL) //each word is looked up in keytab with binsearch
       {
         p->count++;
       }
+      */
+      // a recursive
+      // at each stage, the word is compared to the word already stored at the node, and is percolated down to
+      // either the left or right subtree by a recursive call to address.
+      // Eventually the word either matches something already in the tree , or a null pointer is encountered,
+      //indicating that a node must be created and added to the tree
+      root = addtree(root, word);
     }
   }
-  
-  for(p = keytab; p < keytab + NKEYS; p++)
-  {
-    if(p->count > 0)
-      printf("%4d %s\n", p->count, p->word);
-  }
 
+  treeprint(root);
+  
   return 0;
 }
 
