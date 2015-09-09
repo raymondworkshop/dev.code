@@ -13,7 +13,6 @@
 #	4. Can't handle table DefaultAndRanges.
 #	5. Add sanity checking before upgrade to the generated scripts.
 #
-# Copyright (C) 2005-2006  Alcatel Shanghai Bell, Inc.
 #
 # Revision history:
 #
