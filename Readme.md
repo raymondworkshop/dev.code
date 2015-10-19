@@ -1,6 +1,6 @@
 DESCRIPTION:  Some code exercises  
 
-* Java
+* Java (in Thinking in Java)
 
 * Python
  - Class.py is an oop syntax exercise  
@@ -8,7 +8,7 @@ DESCRIPTION:  Some code exercises
  - ** Inheritance.py is an Inheritance exercise  **  
  - ** LinkedList.py is the linked list  **  
 
-* C++  
+* C++ (in Thinking in C++) 
  - vector.cpp is an vector syntax exercise  
  - vector1.cpp is another vector syntax exercise  
  - trString.cpp is about string implements in Class  
@@ -45,10 +45,10 @@ DESCRIPTION:  Some code exercises
  - A good class example
 
 * Script  
- - A web user register/login/active project in PHP/MySQL/HTML 
- 
+ - php/ is a min web user register/login/active project 
+ - Matlab/ is a speech recognition project in AI course 
  - subsCounter.pl computes numbers of subscriber  
- - create_patch.tcl, dbmig_gen.pl, gen_patch.pl, gen_patchLoad.pl, gen_patchStr2.pl, patchLoad.sh are a patch tool  
+ - create_patch.tcl, dbmig_gen.pl, gen_patch.pl, gen_patchLoad.pl, gen_patchStr2.pl, patchLoad.sh are a patch script tool  
 
  - localService.lua displays all users's location based on users' location on screen, based on Corona middle layer in Mobile APP course in CUHK  
 
