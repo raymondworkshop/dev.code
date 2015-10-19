@@ -42,6 +42,7 @@ DESCRIPTION:  Some code exercises
  - The code exercise based on the book "The C Proramming Language" by Brian Kernighan and Dennis Ritchie  
 
 * C#
+ - A good class example
 
 * Script  
  - A web user register/login/active project in PHP/MySQL/HTML 
