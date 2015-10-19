@@ -5,9 +5,11 @@
  *  Reads in data of various types from standard input.
  *
  *************************************************************************/
+package test;
 
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
 
 /**
  *  <Standard input>. This class provides methods for reading strings
