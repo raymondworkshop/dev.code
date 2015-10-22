@@ -1,1 +1,1 @@
-This is a user register/login/active web project
+This is a user register/login/active web project in php/mysql/html
