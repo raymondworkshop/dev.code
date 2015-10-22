@@ -5,7 +5,7 @@
  
 * JVM
   - [Understanding Java Garbage Collection] (http://www.cubrid.org/blog/dev-platform/understanding-java-garbage-collection/)
-  - 
+  
 * Some Awesome Projects
   - [Spark] (http://spark.apache.org/)
 
