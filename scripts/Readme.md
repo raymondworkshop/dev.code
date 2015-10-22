@@ -1,6 +1,4 @@
 * Script  
- - php/ is a min web user register/login/active project 
- - Matlab/ is a speech recognition project in AI course 
  - subsCounter.pl computes numbers of subscriber  
  - create_patch.tcl, dbmig_gen.pl, gen_patch.pl, gen_patchLoad.pl, gen_patchStr2.pl, patchLoad.sh are a patch script tool  
 
