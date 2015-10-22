@@ -1,1 +1,0 @@
-#### Summary about C/C++
