@@ -16,6 +16,7 @@
 
  * Some Awesome projects (todo)
   - [MXNet] (https://github.com/dmlc/mxnet)
+  - [leveldb](https://github.com/google/leveldb)
 
 #### Summary about C
 
