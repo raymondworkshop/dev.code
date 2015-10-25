@@ -15,8 +15,10 @@
   -  [Google C++ Style Guide] (https://google-styleguide.googlecode.com/svn/trunk/cppguide.html)
 
  * Some Awesome projects (todo)
-  - [MXNet] (https://github.com/dmlc/mxnet)
   - [leveldb](https://github.com/google/leveldb)
+  - [MXNet] (https://github.com/dmlc/mxnet)
 
 #### Summary about C
 
+#### Summary about matlab
+  - [matlab coding tips] (https://github.com/muyun/dev.randomness/blob/master/matlab.md)
