@@ -1,1 +1,3 @@
-#### Java (Thinking in Java)
+#### Java coding exercises
+
+####Java (Thinking in Java)
