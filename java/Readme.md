@@ -1,3 +1,4 @@
 #### Java coding exercises
 
-####Java (Thinking in Java)
+#### Java
+  * Some code are from <Thinking in Java>
