@@ -14,10 +14,10 @@ import java.util.Queue;
 import java.util.LinkedList;
 
 // define a Node class
-class Node {
+class Node_ {
 	public int data;
-	public Node left; //left child
-	public Node right;//right
+	public Node_ left; //left child
+	public Node_ right;//right
 	//private Node parent;
 	
 	/*
@@ -28,7 +28,7 @@ class Node {
 		//this.parent = parent;
 	}*/
 	
-	Node(int data){
+	Node_(int data){
 		this.data = data;
 		this.left = null;
 		this.right = null;
@@ -39,7 +39,7 @@ class Node {
 
 public class BinTreeTraverse {
 	
-	public Node root;
+	public Node_ root;
 
 	// create a null bi tree
 	public BinTreeTraverse(){
@@ -55,14 +55,14 @@ public class BinTreeTraverse {
 	}
 	
 	private void insert(int data){
-		Node newnode = new Node(data);
+		Node_ newnode = new Node_(data);
 		
 		if(this.root== null){ // root
-			root = new Node(data);
+			root = new Node_(data);
 			
 		}else{ //if not
-            Node current = root;
-            Node parent;
+            Node_ current = root;
+            Node_ parent;
             while(true){
             	parent = current;
             
@@ -89,7 +89,7 @@ public class BinTreeTraverse {
 	}
 	
 	// print the tree
-	private void printTree(Node node) {
+	private void printTree(Node_ node) {
 		if (node == null) {
 			return;
 		}
@@ -110,7 +110,7 @@ public class BinTreeTraverse {
 	}
 	
 	// level order
-	public void layerOrder(Node localroot){
+	public void layerOrder(Node_ localroot){
 		if(localroot == null){
 			return;
 		}
@@ -121,12 +121,12 @@ public class BinTreeTraverse {
 		*/
 		
 		//use the queue here to print
-		Queue<Node> queue = new LinkedList<Node>();
+		Queue<Node_> queue = new LinkedList<Node_>();
 		queue.add(localroot);
 		
 		
 		while(!queue.isEmpty()){
-			Node node = queue.poll();
+			Node_ node = queue.poll();
 			// visit the head
 			System.out.print(node.data +  " ");
 			
