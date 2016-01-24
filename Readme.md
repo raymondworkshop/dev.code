@@ -1,6 +1,3 @@
-#### Summary about Python
-* Guide
-  - [Google Python Style Guide] (https://google.github.io/styleguide/pyguide.html)
 
 #### Summary about Java
  * Guide
@@ -22,6 +19,10 @@
   - [MXNet] (https://github.com/dmlc/mxnet)
 
 #### Summary about C
+
+#### Summary about Python
+* Guide
+  - [Google Python Style Guide] (https://google.github.io/styleguide/pyguide.html)
 
 #### Summary about matlab
   - [matlab coding tips] (https://github.com/muyun/dev.randomness/blob/master/matlab.md)
