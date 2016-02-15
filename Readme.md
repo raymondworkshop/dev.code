@@ -6,9 +6,6 @@
 * JVM
   - [Understanding Java Garbage Collection] (http://www.cubrid.org/blog/dev-platform/understanding-java-garbage-collection/)
   
-* Some Awesome Projects (toread)
-  - [Spark] (http://spark.apache.org/)
-
 #### Summary about C++
  * Guide
   -  [C++11 Core Guidelines] (https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md)
