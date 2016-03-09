@@ -1,0 +1,6 @@
+<?php
+include("common.php");
+//µn¥X¥Î¤á 
+session_destroy();
+Header( "Location: login.php" ); 
+?>
