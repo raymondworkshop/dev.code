@@ -23,3 +23,10 @@
 
 #### Summary about matlab
   - [matlab coding tips] (https://github.com/muyun/dev.randomness/blob/master/matlab.md)
+  - 
+  
+#### reference
+* [Practical Programming in C] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-087-practical-programming-in-c-january-iap-2010/)
+* [Introduction to C Memory Management and C++ Object-Oriented Programming] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-088-introduction-to-c-memory-management-and-c-object-oriented-programming-january-iap-2010/)
+* [Introduction to Programming in Java] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-introduction-to-programming-in-java-january-iap-2010/assignments/)
+* [Introduction to C++] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-096-introduction-to-c-january-iap-2011/)
