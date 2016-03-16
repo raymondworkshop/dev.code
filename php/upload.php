@@ -25,8 +25,8 @@ if(!$sftp->login('biomet', 'saospiet')){
 #For cross-platform
 #define('DS','/');
 #define('BASE_ROOT', str_replace('\\', DS,dirname(__FILE__)));
-$default_server_dir = "/home/biomet/public_html/project";
-$default_local_dir = "/biomet/";
+$default_server_dir = "/home/public_html/project";
+$default_local_dir = "/";
 echo $sftp->pwd() ."\r\n";
 
 $arr = array (

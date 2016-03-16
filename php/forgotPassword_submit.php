@@ -13,7 +13,7 @@ if ($userName == "")
 
 //check existing user
 $_SESSION["message_reg"] = "";
-$link = mysql_connect('mysql.comp.polyu.edu.hk', 'biomet', 'qwkdjmxn');
+$link = mysql_connect('mysql.hk', 'biomet', 'qwkdjmxn');
 mysql_select_db("biomet");
 	
 $sqlCheck = "select userName,userPass,userEmail from biometLogin where userName ='$userName';";	

@@ -48,13 +48,12 @@
 		
 		//send email
 		$to = $userEmail;
-		 $subject = "Watchlist Officer Account request has been denied ";
-		 $message = "Dear Watchlist Officers,\n\t";
+		 $subject = " Officer Account request has been denied ";
+		 $message = "Dear Officers,\n\t";
 		 $message .= "\n\t";
-		 $message .= "Your registration request to use 'Automated Watchlist Identification System for Border Crossing' has been denied.\n\t";
+		 $message .= "Your registration request to use 'Automated  Identification System for Border Crossing' has been denied.\n\t";
 		 $message .= "Please contact system adminstrator for future details";
 		 $message .= "\n\t";
-		$from = "csajaykr@comp.polyu.edu.hk";
 	// 	$from = "lauohung@gmail.com";
 		 $headers = "From:" . $from;
 		 mail($to,$subject,$message,$headers);

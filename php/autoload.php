@@ -53,7 +53,7 @@ if(!$sftp->login('biomet', 'saospiet')){
 }
 
 //connect to the database
-$link = mysql_connect('mysql.comp.polyu.edu.hk:3306', 'biomet', 'qwkdjmxn') 
+$link = mysql_connect('mysql.hk:3306', 'biomet', 'qwkdjmxn') 
         or die('Unable to connect: ' . mysql_error());
 echo "Connected to MySQL \n";
 
@@ -238,7 +238,7 @@ $sftp->put($basename_image, $image_contents);
 //update the database
 
 //connect to the database
-$link = mysql_connect('mysql.comp.polyu.edu.hk:3306', 'biomet', 'qwkdjmxn') 
+$link = mysql_connect('mysql.hk:3306', 'biomet', 'qwkdjmxn') 
         or die('Unable to connect: ' . mysql_error());
 
 //select a database to work with

@@ -6,7 +6,7 @@ include("header.php");
 ?>
 
 <head>
-    <meta http-equiv="refresh" content="1"; url="http://biomet.comp.polyu.edu.hk/project/watchListInspect.php">
+    <meta http-equiv="refresh" content="1"; url="">
 <style>
    /* Begin Navigation Bar Styling */
    #nav {
@@ -52,8 +52,7 @@ include("header.php");
         <th>
         <ul id="nav">
 	<a href="suspectsData.php">Home</a>
-        <a href="watchListInspect.php">WatchList Inspection</a>
-        <!--<a href="http://biomet.comp.polyu.edu.hk/project/spoofing.php">Spoofing and Disguise</a>
+        <a href="watchListInspect.php"> Inspection</a>
          -->
 		</ul>
         </th>
@@ -198,7 +197,6 @@ if ( $userName != "" ){
 		echo "</table>";
 		echo "<br>";
 		echo "<table width='780' border='0' align='center' cellpadding='0' cellspacing='0'>";
-		echo "<tr><td  class='content'><p align=\"left\">Copyright © 2014 Department of Computing, The Hong Kong Polytechnic University. All rights reserved.  </p></td></tr>";
 		echo "</table>";	
 		echo "<br>";		
 		mysql_free_result($result);

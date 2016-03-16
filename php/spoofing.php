@@ -6,7 +6,7 @@ include("header.php");
 ?>
 
 <head>
-    <meta http-equiv="refresh" content="5"; url="http://biomet.comp.polyu.edu.hk/project/spoofing.php">
+    <meta http-equiv="refresh" content="5"; url="http://biomet.hk/project/spoofing.php">
 </head>	
 
 <?php
@@ -224,7 +224,6 @@ if ( $userName != "" ){
 		echo "</table>";
 		echo "<br>";
 		echo "<table width='780' border='0' align='center' cellpadding='0' cellspacing='0'>";
-		echo "<tr><td  class='content'><p align=\"left\">Copyright © 2014 Department of Computing, The Hong Kong Polytechnic University. All rights reserved.  </p></td></tr>";
 		echo "</table>";	
 		echo "<br>";
 		mysql_free_result($result_mask);

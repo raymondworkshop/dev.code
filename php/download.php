@@ -33,13 +33,13 @@ function makedir($dir){
 
 //1) download the dataset from the server
 //add parameters to separate the functions
-$sftp = new Net_SFTP('csdoor2.comp.polyu.edu.hk');
+$sftp = new Net_SFTP('csdoor2.comp.hk');
 if(!$sftp->login('biomet', 'saospiet')){
    exit('Login Failed');
 }
 
 //connect to the database
-$link = mysql_connect('mysql.comp.polyu.edu.hk:3306', 'biomet', 'qwkdjmxn') 
+$link = mysql_connect('mysql.hk:3306', 'biomet', 'qwkdjmxn') 
         or die('Unable to connect: ' . mysql_error());
 echo "Connected to MySQL \n";
 

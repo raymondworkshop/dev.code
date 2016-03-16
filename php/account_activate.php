@@ -8,7 +8,7 @@
 	$message = "Invalid entrypoint";
 				
 	//check existing user
-	$link = mysql_connect('mysql.comp.polyu.edu.hk', 'biomet', 'qwkdjmxn');
+	$link = mysql_connect('mysql.hk', 'biomet', 'qwkdjmxn');
 
 	if (!$link) {
 		die('Could not connect: ' . mysql_error());
@@ -49,15 +49,15 @@
 		 $subject = "Watchlist Officer Account Activation ";
 		 $message = "Dear Watchlist Officers,\n\t";
 		 $message .= "\n\t";
-		 $message .= "Your registration request to use 'Automated Watchlist Identification System for Border Crossing' has been approved.\n\t";
+		 $message .= "Your registration request to use 'Automated  Identification System for ' has been approved.\n\t";
 		 $message .= "\n\t";
 		 $message .= "Your User Name: ".$userName."\n\t";
 		 $message .= "\n\t";
-		 $message .= "Please login and proceed Watchlist details using following weblink";
-		 $message .= "Login Page: http://biomet.comp.polyu.edu.hk/project/login.php";
+		 $message .= "Please login and proceed  details using following weblink";
+		 $message .= "Login Page: http://biomet..hk/project/login.php";
 		 $message .= "\n\t";
-		 $from = "csajaykr@comp.polyu.edu.hk";
-	//	$from = "lauohung@gmail.com";
+		 
+		$from = "wenlzhao@gmail.com";
 		 $headers = "From:" . $from;
 		 mail($to,$subject,$message,$headers);
 		

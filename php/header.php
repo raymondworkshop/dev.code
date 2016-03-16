@@ -1,6 +1,5 @@
 <html>
 <head> 
-<title>Department of Computing, The Hong Kong Polytechnic University</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!--Fireworks 8 Dreamweaver 8 target.  Created Sun Apr 23 20:14:40 GMT+0800 2006-->
 <script language="JavaScript">

@@ -6,7 +6,6 @@
 	   <td>
 		<table align="left" border="0" cellpadding="0" cellspacing="0" width="760">
 		  <tr>
-		   <td height="76" valign="top" class="content">Copyright © 2014 Department of Computing, The Hong Kong Polytechnic University. All rights reserved.  </td>
 		   <td height="76" valign="top" class="content"></td>
 		  </tr>
 		</table>

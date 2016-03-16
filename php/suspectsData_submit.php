@@ -147,7 +147,7 @@ else
    ##For the replicated name
    #for database connection
 	//connect to the database
-    $link = mysql_connect('mysql.comp.polyu.edu.hk:3306', 'biomet', 'qwkdjmxn') 
+    $link = mysql_connect('mysql.hk:3306', 'biomet', 'qwkdjmxn') 
         or die('Unable to connect: ' . mysql_error());
     #echo "Connected to MySQL \n";
 
@@ -244,7 +244,6 @@ else
 		// # echo "</table>";
 		// #echo "<br>";
 		// #echo "<table width='780' border='0' align='center' cellpadding='0' cellspacing='0'>";
-		// #echo "<tr><td  class='content'><p align=\"left\">Copyright © 2013 Department of Computing, The Hong Kong Polytechnic University. All rights reserved.  </p></td></tr>";
 		// #echo "</table>";	
 		// #echo "<br>";		
 

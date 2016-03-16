@@ -4,7 +4,7 @@ include("common.php");
 
 $userName = $_POST["userName"];
 $password = $_POST["password"];
-$link = mysql_connect('mysql.comp.polyu.edu.hk', 'biomet', 'qwkdjmxn');
+$link = mysql_connect('mysq.hk', 'biomet', 'qwkdjmxn');
 
 if (!$link) {
 			die('Could not connect: ' . mysql_error());
