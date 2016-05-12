@@ -5,6 +5,8 @@
  - **LinkedList.py is the linked list**  
  
 * reference
+ - [How to Think Like a Computer Scientist](http://interactivepython.org/runestone/static/thinkcspy/toc.html)
+ - [Problem Solving with Algorithms and Data Structures](http://interactivepython.org/runestone/static/pythonds/index.html)
  - [Python Codecademy](https://www.codecademy.com/learn/python)
  - [Data Science in python](http://www.analyticsvidhya.com/learning-paths-data-science-business-analytics-business-intelligence-big-data/learning-path-data-science-python/)
  - [OOP in Python](http://www.brpreiss.com/books/opus7/html/book.html)
