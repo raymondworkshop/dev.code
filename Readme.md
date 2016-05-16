@@ -6,10 +6,7 @@
 * JVM
   - [Understanding Java Garbage Collection] (http://www.cubrid.org/blog/dev-platform/understanding-java-garbage-collection/)
 
-#### Summary about C
- * Some Awesome projects (todo)
-  - [leveldb](https://github.com/google/leveldb)
-  - [MXNet] (https://github.com/dmlc/mxnet)
+#### Summary about Scala
 
 #### Summary about Python
 * Guide
@@ -18,6 +15,12 @@
 #### Summary about matlab
   - [matlab coding tips] (https://github.com/muyun/dev.randomness/blob/master/matlab.md)
   - 
+  
+#### Summary about C
+ * Some Awesome projects (todo)
+  - [leveldb](https://github.com/google/leveldb)
+  - [MXNet] (https://github.com/dmlc/mxnet)
+
   
 #### reference
 * [Practical Programming in C] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-087-practical-programming-in-c-january-iap-2010/)
