@@ -1,8 +1,8 @@
-package exercise.mit;
+package exercise.mit.libraries;
 
 public class Book {
-    String title;
-    boolean borrowed;
+    private String title;
+    private boolean borrowed;
     
     // a new Book
     public Book(String bookTitle){
