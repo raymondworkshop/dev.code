@@ -38,7 +38,7 @@ public class OSExecute {
         } catch (Exception e) {
             //
             if(!command.startsWith(""))
-                command.();
+               command.();
             else
                 throw new RuntimeException(e);
             

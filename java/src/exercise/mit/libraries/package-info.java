@@ -1,8 +1,8 @@
 /**
  * @author zhaowenlong
- *
- *  the solutions of the course - (Introduction to Programming in Java ) in MIT
- *  
+ * 
+ * the solution of the problem -ch4
+ * *  
  *  1. each class belongs to a package
  *  2. classes in the same package serve a similar purpose
  *  3. packages are just directories

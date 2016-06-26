@@ -1,4 +1,7 @@
 package exercise.mit;
+/*
+ * coding exercise
+ * */
 
 public class Marathon {
     public static int getMinIndex(int[] values){

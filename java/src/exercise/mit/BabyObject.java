@@ -1,4 +1,7 @@
 package exercise.mit;
+/*
+ * java object exercise
+ * */
 
 public class BabyObject {
      private String name;
