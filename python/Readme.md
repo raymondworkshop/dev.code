@@ -1,15 +1,15 @@
 * Python
- - Class.py is an oop syntax exercise  
- - Class1.py is an oop instance  
- - **Inheritance.py is an Inheritance exercise**  
- - **LinkedList.py is the linked list**  
+ - utils/ define the basic data structure
+ - exercise/ is some code exercises in python
+ - 
 
-
-* some notes - Data structure 
- - sequences of sequences -> (string, list, tuple)  
+* notes 
+ - Data structure 
+    + sequences of sequences -> (string, list, tuple)  
   tuple is immutable;
 
 * reference
+ - [think python](http://www.greenteapress.com/thinkpython2/html/thinkpython2005.html#sec48)
  - [How to Think Like a Computer Scientist](http://interactivepython.org/runestone/static/thinkcspy/toc.html)
  - [Problem Solving with Algorithms and Data Structures](http://interactivepython.org/runestone/static/pythonds/index.html)
  - [Python Codecademy](https://www.codecademy.com/learn/python)
