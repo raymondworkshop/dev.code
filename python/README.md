@@ -5,7 +5,12 @@
 * notes 
  - Data structure 
     + sequences of sequences -> (string, list, tuple)  
-  tuple is immutable;
+      string, and tuple are immutable
+      
+      => list of characters(mutable)
+         use a sequence (the tuple or string) as a dic key
+         pass a sequence as an arg -> use tuple reduce the potential for unexpected behavior due to aliasing
+      
 
 * reference
  - [think python](http://www.greenteapress.com/thinkpython2/html/thinkpython2005.html#sec48)
