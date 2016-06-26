@@ -7,9 +7,9 @@
     + sequences of sequences -> (string, list, tuple)  
       string, and tuple are immutable
       
-      => list of characters(mutable)
-         use a sequence (the tuple or string) as a dic key
-         pass a sequence as an arg -> use tuple reduce the potential for unexpected behavior due to aliasing
+      => list of characters(mutable) 
+         use a sequence (the tuple or string) as a dic key 
+         pass a sequence as an arg -> use tuple reduce the potential for unexpected behavior due to aliasing 
       
 
 * reference
