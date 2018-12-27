@@ -5,7 +5,7 @@ kinds of events in the simulation.
 """
 # Feel free to import classes and functions from
 # *your other files*, but remember not to import any external libraries.
-
+#
 
 class Event:
     """An event.
@@ -141,6 +141,7 @@ class Event:
         >>> second = Event(2)
         >>> first >= first
         True
+        
         >>> first >= second
         False
         >>> second >= first
