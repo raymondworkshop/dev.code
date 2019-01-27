@@ -2,6 +2,7 @@
 # @author: wenlong
 # TODO
 
+
 class Time:
     """ represents the time of day. """
 
@@ -11,6 +12,7 @@ class Time:
         self.second = second
 
     def __str__(self):
+        # print '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
         return '%.2d:%.2d:%.2d' % (self.hour, self.minute, self.second)
 
     def int_to_time(self, seconds):
@@ -25,8 +27,10 @@ class Time:
 
 def main():
     time = Time()
+    # print(time)
     time.int_to_time(3100)
-    time.print_time()
+    print(time)
+
 
 if __name__ == "__main__":
     main()
