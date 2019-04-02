@@ -6,7 +6,6 @@ in a grocery store.
 # This module is used to read in the data from a json configuration file.
 import json
 
-
 class GroceryStore:
     """A grocery store.
 
