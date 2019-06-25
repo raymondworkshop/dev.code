@@ -1,10 +1,16 @@
 """
 Iterator pattern 
+
+1. fetch the items one at a time and on demand 
+2. yield keyword allows the construction of generators, which work as iterators 
+3. generators fully implement the iterator interface 
+
+
 - generators are also called iterators 
 - Generators produce data for iteration 
 
 @wenlong
-  - 03-07-2019 creation
+  - 2019-03-07 creation
 """
 
 import  re
@@ -43,10 +49,11 @@ class Sentence:
             yield match.group() # extract the actual matched text
 
 
-def firstn(n):
-    num = 0
+def countdown(num):
+    #num = 0
+    print('Starting')
 
-    while num < n:
+    while num > 0:
         #nums.append(num)
         # a generator that yields items instead of returning a list 
         #
@@ -54,10 +61,21 @@ def firstn(n):
         # once the function yield statement is executed, the function is paused and transfers the control to the caller 
         # local variables and their states are remembered between successive calls
         #
+        # 
+        # yield pauses the function and saves the local state so that it can be resumed right where it left off 
         yield num  # return the generator object 
-        num += 1
+        num -= 1
 
     #return nums
+
+
+def gen_AB():
+    print('start')
+    yield 'A'
+    print('contine')
+    yield 'B'
+    print('end')
+
 
 def main():
     txt = '"The time has come," the Walrun said,'
@@ -65,12 +83,18 @@ def main():
     s = Sentence(txt)
     print(list(s))
 
+    """
     first_n = firstn(10)
     # sum(iterable) -> the iterable calls the generator object created from the function firstn(n)
     sum_of_first_n = sum(first_n) # 
     print(sum_of_first_n)
+    """
 
+    val = countdown(5) # calling the function does not execute it but returns a generator object to used to control execution 
+
+    val = gen_AB()
     
+    print("Done")
     return 0
 
 if __name__ == "__main__":
