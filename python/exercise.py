@@ -38,11 +38,65 @@ def item3():
     #return
 
 def item4():
-    return
+    names = ['cecilia', 'lise', 'marie'] 
+    letters = [len(n) for n in names]
 
+    longest_name = None
+    max_letters = 0
+    for name, count in zip(names, letters): #zip wraps two or more iterators with a lazy generator
+        if count > max_letters:
+            longest_name = name
+            max_letters = count
+
+    print('longest_name: %s, max_letters: %s' % (longest_name, max_letters))
+
+def item5():
+    # generate random int
+    #from random import seed
+    #from random import randint
+    #seed(1)
+    import logging
+    # unicode file
+    f = open('random_data.txt', 'w', encoding='utf-8')
+    f.write('success\nand\nnew\nlines')
+    f.close()
+
+    handle = open('random_data.txt', 'r') # may raise IOError
+    try:
+        data = handle.read()  # may raise UnicodeDecodeError
+    except UnicodeDecodeError as e: # handle excepts
+        raise UnicodeDecodeError from e
+    else: # distinguish the success case from the try/except blocks, and perform additional actions
+        logging.info(data+"-end")
+    finally: # always run after try regardless of whether exceptions were raised
+        handle.close() 
+
+    #return
+
+def item6():
+    def divide(a, b):
+        try:
+            return a / b
+        except ZeroDivisionError as e: 
+            # return None  # an error prone
+            raise ValueError('Invalid inputs') from e
+
+    x, y = 5, 0
+    try:
+        result = divide(x, y)
+    except ValueError:
+        print('Invalid inputs')
+    else:
+        print('Result: %.1f' % result)
+
+    return
 
 if __name__ == "__main__":
     #item1()
     #item2()
-    item3()
-    item4()
+    #item3()
+    #item4()
+    #item5()
+    # functions
+    item6()
+
