@@ -5,12 +5,20 @@ import (
 	"math"
 )
 
-//structure
+func pow(x, n, lim float64) float64 {
+	if v := math.Pow(x, n); v < lim {
+		return v
+	}
+	return lim
+}
+
+// structure
 type Point struct {
 	X, Y int
 }
 
 func main() {
+	// local variable
 	i := 42
 
 	// pointer
@@ -25,18 +33,18 @@ func main() {
 
 	//structue
 	v := Point{1, 2}
-	v.X = 4
-	fmt.Println(p)
+	p1 := &v //pointer
+	p1.X = 4
+	fmt.Println(v)
 
 	//array
 	primes := [5]int{2, 3, 5, 7, 11}
 	fmt.Println(primes)
 
 	//maps
-	var m = map[string]Point{
-		"a": {3, 4},
-		"b": {5, 7},
-	}
+	var m = make(map[string]Point)
+	m["a"] = Point{3, 4}
+	m["b"] = Point{5, 7}
 
 	fmt.Println(m)
 
@@ -45,4 +53,10 @@ func main() {
 		return math.Sqrt(x*x + y*y)
 	}
 	fmt.Println(hypot(5, 12))
+
+	//function
+	fmt.Println(pow(3, 2, 10))
+
+	// Methods <- a function with a receiver argument
+
 }
