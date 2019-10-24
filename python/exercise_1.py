@@ -73,23 +73,7 @@ def item5():
 
     #return
 
-def item6():
-    def divide(a, b):
-        try:
-            return a / b
-        except ZeroDivisionError as e: 
-            # return None  # an error prone
-            raise ValueError('Invalid inputs') from e
 
-    x, y = 5, 0
-    try:
-        result = divide(x, y)
-    except ValueError:
-        print('Invalid inputs')
-    else:
-        print('Result: %.1f' % result)
-
-    return
 
 if __name__ == "__main__":
     #item1()
