@@ -18,7 +18,6 @@ def function1():
     else:
         print('Result: %.1f' % result)
 
-
     return
 
 def function2():
@@ -49,9 +48,23 @@ def function3():
     result = list(index_words(text))
     return result
 
+def function4():
+    def log(message, *values): #optional when we know the num of inputs in the arg list
+        if not values:
+            print(message)
+        else:
+            values_str = ', '.join(str(x) for x in values)
+            print('%s: %s' % (message, values_str))
+    
+    log('My numbers are', 1, 2)
+    log('Hi there')
+
+    #return
+
 
 if __name__ == "__main__":
     #function1()
     #function2() #todo-item15
     
-    function3()
+    #function3()
+    function4()
