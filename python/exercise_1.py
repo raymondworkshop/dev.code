@@ -74,6 +74,69 @@ def item5():
     #return
 
 
+def item6():
+    # notes: use built-in modules for alg and data structrue
+    """
+    deque - double-ended queue
+    """
+    print("use deque in FIFO")
+    from collections import deque
+    # ideal for FIFO queues
+    fifo = deque()
+    #
+    fifo.append(1) # producer
+    fifo.append(2)
+    fifo.append(2)
+    x = fifo.popleft() # consumer; return and remove the leftmost item
+    print("x: ", x)
+    print("fifo: ", fifo)
+
+
+    """
+    use OrderedDict keep track of the inserted order
+    """
+    print("use OrderedDict keep track of the inserted order")
+    from collections import OrderedDict
+    #
+    a = OrderedDict()
+    a['foo'] = 1
+    a['bar'] = 2
+    b= OrderedDict()
+    b['foo'] = 'red'
+    b['bar'] = 'blue'
+    for value1, value2 in zip(a.values(), b.values()):
+        print(value1, value2)
+
+
+    """
+    use defaultdict to store a default value auto
+    """
+    print('use defaultdict to store a default value auto')
+    from collections import defaultdict
+    stats = defaultdict(int) # auto storing a default value when key doesn't exist
+    #if 'counter' not in stats:
+    #    stats['counter'] = 0
+    stats['counter'] += 1 
+
+
+    """
+    heapq - heap queue, maintain a priority queue, and 
+    """
+    import heapq  # ???
+    _li = [5,7,9,1,3]
+    li = [8,2]
+    heapq.heappush(li,5)
+    heapq.heappush(li,3)
+    heapq.heappush(li,7)
+    heapq.heappush(li,4)
+    print("heapq li: ", li)  # items can be rearraged based oh highest priority
+    print("the 1st one: ", li[0])
+    #
+
+
+
+
+
 if __name__ == "__main__":
     #item1()
     #item2()
