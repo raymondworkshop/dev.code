@@ -1,6 +1,6 @@
 * Python
  - utils/ define the basic data structure
- - exercise/ is some code exercises in python
+ - exercise/ is some effective python skills
 
 * notes 
  - Data structure 
