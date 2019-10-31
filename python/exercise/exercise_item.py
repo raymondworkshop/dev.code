@@ -2,8 +2,10 @@
 Some effective python skills
 """
 
+__all__ = ['item1','item2', 'item3', 'item4', 'item5', 'item6']
+
 def item1():
-    #list comprehensions
+    """list comprehensions"""
     a = [1, 2, 3, 4, 5, 6, 7, 9]
     even_squares = [x**2 for x in a if x % 2 == 0]
     print(even_squares)
@@ -16,24 +18,26 @@ def item1():
     print(repr(rank_dict))
 
     len_name = {name: len(name) for name in ranks.keys()}
-    print(len_name)
+    print(repr(len_name))
 
 def item2():
-    #generator expressions avoid memory issues by produing outputs one at a time as an iterator
-    # could operate on a large stream of input 
+    """generator expressions avoid memory issues by produing outputs one at a time as an iterator
+     could operate on a large stream of input 
+    """
     a = [100, 57, 15, 1, 12, 75, 5, 86, 89, 11]
     it = ((x, x**0.5) for x in a)  # ()
-    print(it)
-    print(next(it))
-    print(next(it))
+    print(repr(it))
+    print(repr(next(it)))
+    print(repr(next(it)))
 
     #return
 
 def item3():
-    #prefer enumerate over range and indexing into a sequence
+    """prefer enumerate over range and indexing into a sequence"""
     flavor_list = ['vanilla', 'chocolate', 'pecan', 'strawberry']
     for i, flavor in enumerate(flavor_list, 1): # begin counting from 1
-        print('%d: %s' % (i, flavor))
+        #print('%d: %s' % (i, flavor))
+        print(repr(i, flavor))
 
     #return
 
@@ -48,7 +52,8 @@ def item4():
             longest_name = name
             max_letters = count
 
-    print('longest_name: %s, max_letters: %s' % (longest_name, max_letters))
+    #print('longest_name: %s, max_letters: %s' % (longest_name, max_letters))
+    print(repr(longest_name, max_letters))
 
 def item5():
     # generate random int
@@ -75,7 +80,8 @@ def item5():
 
 
 def item6():
-    # notes: use built-in modules for alg and data structrue
+    """notes: use built-in modules for alg and data structrue"""
+
     """
     deque - double-ended queue
     """
@@ -88,8 +94,10 @@ def item6():
     fifo.append(2)
     fifo.append(2)
     x = fifo.popleft() # consumer; return and remove the leftmost item
-    print("x: ", x)
-    print("fifo: ", fifo)
+    #print("x: ", x)
+    print(repr(x))
+    #print("fifo: ", fifo)
+    print(repr(fifo))
 
 
     """
@@ -132,8 +140,6 @@ def item6():
     print("heapq li: ", li)  # items can be rearraged based oh highest priority
     print("the 1st one: ", li[0])
     #
-
-
 
 
 

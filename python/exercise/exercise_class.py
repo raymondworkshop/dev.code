@@ -2,6 +2,8 @@
 classes and inheritance
 """
 
+__all__ = ['Subject', 'Student', 'Gradebook']
+
 def class1():
     return
 

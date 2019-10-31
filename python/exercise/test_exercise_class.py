@@ -1,8 +1,9 @@
 import os
 import unittest
 
-from exercise_3 import SimpleGradebook
-from exercise_3 import Gradebook
+
+from exercise_class import SimpleGradebook
+from exercise_class import Gradebook
 
 class TestSimpleGradebook(unittest.TestCase):
     #student = 'Isaac Newton'

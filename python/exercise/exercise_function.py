@@ -2,6 +2,8 @@
  functions
 """
 
+__all__ = ['function1', 'function3', 'function4']
+
 def function1():
     def divide(a, b):
         try:
