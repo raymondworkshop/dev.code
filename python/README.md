@@ -1,17 +1,17 @@
 * Python
- - utils/ define the basic data structure
- - exercise/ is some effective python skills
+  - utils/ define the basic data structure
+  - exercise/ is some effective python skills
 
 * notes 
- - Data structure 
+  - Data structure 
     + sequences of sequences -> (string, list, tuple)  
       string, and tuple are immutable
       
-      => list of characters(mutable)  
+    + list of characters(mutable)  
          use a sequence (the tuple or string) as a dic key  
          pass a sequence as an arg -> use tuple reduce the potential for unexpected behavior due to aliasing   
 
- - use unittest lib
+  - use unittest lib
       
 
 * reference
