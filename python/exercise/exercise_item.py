@@ -141,7 +141,11 @@ def item6():
     print("the 1st one: ", li[0])
     #
 
-
+def item7():
+    # note: enumerate provides concise looping to get the index  
+    flavor_list = ['vanilla', 'chocolate', 'pecan', 'strawberry']
+    for i, flavor in enumerate(flavor_list):
+        print(f'{i+1}: {flavor}')
 
 if __name__ == "__main__":
     #item1()
@@ -149,6 +153,7 @@ if __name__ == "__main__":
     #item3()
     #item4()
     #item5()
+    item7()
     # functions
-    item6()
+    #item6()
 

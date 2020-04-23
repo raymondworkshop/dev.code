@@ -1,6 +1,6 @@
 import unittest
 
-from exercise_item import item2
+from exercise.exercise_item import item2
 
 class Testitem2(unittest.TestCase):
     def test_item2(self):

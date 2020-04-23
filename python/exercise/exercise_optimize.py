@@ -1,5 +1,5 @@
 """
-
+robustness 
 """
 
 def insertion_sort(data):
@@ -7,3 +7,8 @@ def insertion_sort(data):
     for value in data:
         insert_value(result, value)
     return result
+
+
+
+if __name__ == "__main__":
+    insertion_sort()    

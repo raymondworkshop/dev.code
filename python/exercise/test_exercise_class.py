@@ -2,19 +2,21 @@ import os
 import unittest
 
 
-from exercise_class import SimpleGradebook
-from exercise_class import Gradebook
+#from .exercise_class1 import SimpleGradebook
+#from .exercise_class1 import Gradebook
+import exercise_class1
+
 
 class TestSimpleGradebook(unittest.TestCase):
     #student = 'Isaac Newton'
-    book = SimpleGradebook()
+    book = exercise_class1.SimpleGradebook()
     book.add_student('Isaac Newton')
     book.report_grade('Isaac Newton', 90)
     print(book.average_grade('Isaac Newton'))
 
 
 class TestGradebook(unittest.TestCase):
-    book = Gradebook()
+    book = exercise_class1.Gradebook()
     albert = book.student('Albert Einstein')
     math = albert.subject('math')
     math.report_grade(80, 0.10)
