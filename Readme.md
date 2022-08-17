@@ -1,29 +1,46 @@
 
-#### Summary about Java
- * Guide
-  - [Google Java Style] (http://google-styleguide.googlecode.com/svn/trunk/javaguide.html)
- 
-* JVM
-  - [Understanding Java Garbage Collection] (http://www.cubrid.org/blog/dev-platform/understanding-java-garbage-collection/)
 
-#### Summary about Scala
 
-#### Summary about Python
-* Guide
-  - [Google Python Style Guide] (https://google.github.io/styleguide/pyguide.html)
+#### About [Composing Programs](http://composingprograms.com/pages/11-getting-started.html)    
+* how computers interpret computer programs and carry out computational processes  
+* some recent progress in computer programs  
 
-#### Summary about matlab
-  - [matlab coding tips] (https://github.com/muyun/dev.randomness/blob/master/matlab.md)
-  - 
+* 现在的编程工作更多是调用和组合别人写的轮子，而不像以前那样需要对轮子如何抽象和实现理解得很清楚 
+
+
+
+#### vim
+* common commands 
+    - :sp (:split) -> split vim the window horizontally  
+    - :vsp (:vsplit) -> split vim window vertically  
+    - Ctrl + wj -> move cursor to the window below (horizontal split)  
+    - Ctrl + wk -> move cursor to the window below (horizontal split)  
+    - Ctrl + wh -> move cursor to the left window (vertical split)
+    - Ctrl + wl -> move cursor to the right window (vertical split)
+
+
+#### Python  
+* Python provides **a kind of "domain language" for thinking about your problem**    
+    - **Python Data Model**, and its API to make our own objects  
+        + **The built-in operators and expressions are at the core** of that language and everything else builds from it.  
+
+        + we leverage the Python Data Model to build new classes  
+            - implement special methods when we want out objects to support and interact with fundamental language constructs  
+            - the Python interpreter **invokes special methods to perform** basic object operations  
   
-#### Summary about C
- * Some Awesome projects (todo)
-  - [leveldb](https://github.com/google/leveldb)
-  - [MXNet] (https://github.com/dmlc/mxnet)
+    - one you build **a kind of intuition around python's built-in objects and operations**, you will find that your intuition applies everywhere  
+        
+* Object, and Protocols  
+    - everything in Python is first-class  
+    - **All objects can be treated as data**    
 
-  
+
+
+#### dynamic program language  
+
+
 #### reference
-* [Practical Programming in C] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-087-practical-programming-in-c-january-iap-2010/)
-* [Introduction to C Memory Management and C++ Object-Oriented Programming] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-088-introduction-to-c-memory-management-and-c-object-oriented-programming-january-iap-2010/)
-* [Introduction to Programming in Java] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-092-introduction-to-programming-in-java-january-iap-2010/assignments/)
-* [Introduction to C++] (http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-096-introduction-to-c-january-iap-2011/)
+* [Eloquent JavaScript](https://eloquentjavascript.net/)
+* [软件随想录 - 关于战略问题的通信之六]  
+* [vim](https://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/)
+
